@@ -3,6 +3,6 @@ package model
 type Airport struct {
 	ID           int
 	Abbreviation string
-	FullNname    string
+	FullName     string
 	City         string
 }
