@@ -24,5 +24,5 @@ func main() {
 	}
 	fmt.Printf("Reports: %v\n", reports)
 
-	api.StartServer()
+	api.StartServer("localhost", 3000)
 }
