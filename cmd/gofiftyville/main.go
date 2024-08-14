@@ -8,14 +8,14 @@ import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/ncruces/go-sqlite3/driver"
 	_ "github.com/ncruces/go-sqlite3/embed"
+	"github.com/seyLu/gofiftyville/internal/model"
+	"github.com/seyLu/gofiftyville/internal/store"
 )
 
-var db *sql.DB
+func CrimeSceneReports(year int, month int, day int, street string) ([]model.CrimeSceneReport, error) {
+	var reports []model.CrimeSceneReport
 
-func CrimeSceneReports(year int, month int, day int, street string) ([]CrimeSceneReport, error) {
-	var reports []CrimeSceneReport
-
-	rows, err := db.Query(`
+	rows, err := store.db.Query(`
 		SELECT *
 		FROM crime_scene_reports
 		WHERE year=? AND month=? AND day=? AND street=?
@@ -26,7 +26,7 @@ func CrimeSceneReports(year int, month int, day int, street string) ([]CrimeScen
 	defer rows.Close()
 
 	for rows.Next() {
-		var report CrimeSceneReport
+		var report model.CrimeSceneReport
 		if err := rows.Scan(&report.ID, &report.Year, &report.Month, &report.Day, &report.Street, &report.Description); err != nil {
 			return nil, fmt.Errorf("CrimeSceneReports [year %q month %q day %q street %q]: %w", year, month, day, street, err)
 		}
@@ -41,11 +41,10 @@ func CrimeSceneReports(year int, month int, day int, street string) ([]CrimeScen
 
 func main() {
 	var err error
-	db, err = sql.Open("sqlite3", "fiftyville.db")
+	db, err = store.initDatabase("fiftyville.db")
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer db.Close()
 
 	reports, err := CrimeSceneReports(2021, 1, 1, "Chamberlin Street")
 	if err != nil {
