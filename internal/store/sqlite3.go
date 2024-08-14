@@ -7,11 +7,11 @@ import (
 	_ "github.com/ncruces/go-sqlite3/embed"
 )
 
-var db *sql.DB
+var DB *sql.DB
 
-func initDatabase(dbPath string) error {
+func InitDatabase() error {
 	var err error
-	db, err = sql.Open("sqlite3", dbPath)
+	DB, err = sql.Open("sqlite3", "../../internal/store/fiftyville.db")
 	if err != nil {
 		return err
 	}
