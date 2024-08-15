@@ -19,16 +19,22 @@ type Report struct {
 func GetCrimeSceneReports(c *gin.Context) {
 	request := c.Request.URL.Query()
 
+	year, month, day := -1, -1, -1
+	parsedReportDate := ""
 	reportDate := strings.TrimSpace(request.Get("report-date"))
-	reportDateLayout := "January 2, 2006"
-	parsedReportDate, err := time.Parse(reportDateLayout, reportDate)
-	if err != nil {
-		fmt.Printf("Error parsing date %s : %v", reportDate, err)
+	if reportDate != "" {
+		reportDateLayout := "January 2, 2006"
+		parsedReportDate, err := time.Parse(reportDateLayout, reportDate)
+		if err != nil {
+			fmt.Printf("Error parsing date %s : %v", reportDate, err)
+		}
+
+		year, month, day = parsedReportDate.Year(), int(parsedReportDate.Month()), parsedReportDate.Day()
 	}
 
 	street := strings.TrimSpace(request.Get("street"))
 
-	crimeSceneReports, err := model.CrimeSceneReports(parsedReportDate.Year(), int(parsedReportDate.Month()), parsedReportDate.Day(), street)
+	crimeSceneReports, err := model.CrimeSceneReports(year, month, day, street)
 	if err != nil {
 		fmt.Printf("Error getting CrimeSceneReports (parsedReportDate %s, street %s): %v", parsedReportDate, street, err)
 	}
