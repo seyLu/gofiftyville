@@ -2,6 +2,8 @@ package model
 
 import (
 	"fmt"
+	"strings"
+
 	"github.com/seyLu/gofiftyville/internal/store"
 )
 
@@ -18,10 +20,13 @@ func CrimeSceneReports(year int, month int, day int, street string) ([]CrimeScen
 	var reports []CrimeSceneReport
 
 	rows, err := store.DB.Query(`
-		SELECT *
+		SELECT
+			id, year, month, day, street, description
 		FROM crime_scene_reports
-		WHERE year=? AND month=? AND day=? AND street=?
-	`, year, month, day, street)
+		WHERE
+			year=? AND month=? AND day=?
+			AND LOWER(street)=?
+	`, year, month, day, strings.ToLower(street))
 	if err != nil {
 		return nil, fmt.Errorf("CrimeSceneReports [year %q month %q day %q street %q]: %w", year, month, day, street, err)
 	}
