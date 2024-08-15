@@ -4,17 +4,15 @@ import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
+	"github.com/seyLu/gofiftyville/internal/api/route"
 )
 
 func StartServer(domain string, port int) {
-	router := gin.Default()
+	app := gin.New()
 
-	router.GET("crime-scene-reports", getCrimeSceneReports)
+	router := app.Group("/api/v1")
+	route.AddRoutes(router)
 
 	host := fmt.Sprintf("%v:%v", domain, port)
-	router.Run(host)
-}
-
-func getCrimeSceneReports(c *gin.Context) {
-	fmt.Println(c.Request.Body)
+	app.Run(host)
 }
