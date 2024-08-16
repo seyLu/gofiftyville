@@ -16,7 +16,14 @@ type CrimeSceneReport struct {
 	Description string
 }
 
-func CrimeSceneReports(year int, month int, day int, street string) ([]CrimeSceneReport, error) {
+type CrimeSceneReportsFilter struct {
+	Year   int
+	Month  int
+	Day    int
+	Street string
+}
+
+func CrimeSceneReports(f CrimeSceneReportsFilter) ([]CrimeSceneReport, error) {
 	var filters []string
 	query := `
 		SELECT
@@ -25,20 +32,20 @@ func CrimeSceneReports(year int, month int, day int, street string) ([]CrimeScen
 	`
 	args := []any{}
 
-	if year != -1 && month != -1 && day != -1 {
+	if f.Year != -1 && f.Month != -1 && f.Day != -1 {
 		filters = append(filters, "year=? AND month=? AND day=?")
-		args = append(args, year, month, day)
+		args = append(args, f.Year, f.Month, f.Day)
 	}
-	if street != "" {
+	if f.Street != "" {
 		filters = append(filters, "LOWER(street)=?")
-		args = append(args, strings.ToLower(street))
+		args = append(args, strings.ToLower(f.Street))
 	}
 
 	query = QueryWithFilters(query, filters)
 
 	rows, err := store.DB.Query(query, args...)
 	if err != nil {
-		return nil, fmt.Errorf("CrimeSceneReports [year %q month %q day %q street %q]: %w", year, month, day, street, err)
+		return nil, fmt.Errorf("CrimeSceneReports [year %q month %q day %q street %q]: %w", f.Year, f.Month, f.Day, f.Street, err)
 	}
 	defer rows.Close()
 
@@ -46,12 +53,12 @@ func CrimeSceneReports(year int, month int, day int, street string) ([]CrimeScen
 	for rows.Next() {
 		var report CrimeSceneReport
 		if err := rows.Scan(&report.ID, &report.Year, &report.Month, &report.Day, &report.Street, &report.Description); err != nil {
-			return nil, fmt.Errorf("CrimeSceneReports [year %q month %q day %q street %q]: %w", year, month, day, street, err)
+			return nil, fmt.Errorf("CrimeSceneReports [year %q month %q day %q street %q]: %w", f.Year, f.Month, f.Day, f.Street, err)
 		}
 		reports = append(reports, report)
 	}
 	if err := rows.Err(); err != nil {
-		return nil, fmt.Errorf("CrimeSceneReports [year %q month %q day %q street %q]: %w", year, month, day, street, err)
+		return nil, fmt.Errorf("CrimeSceneReports [year %q month %q day %q street %q]: %w", f.Year, f.Month, f.Day, f.Street, err)
 	}
 
 	return reports, nil

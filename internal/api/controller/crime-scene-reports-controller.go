@@ -19,38 +19,40 @@ type CrimeSceneReport struct {
 func GetCrimeSceneReports(c *gin.Context) {
 	request := c.Request.URL.Query()
 
-	year, month, day := -1, -1, -1
-	parsedReportDate := ""
+	f := model.CrimeSceneReportsFilter{
+		Year:   -1,
+		Month:  -1,
+		Day:    -1,
+		Street: strings.TrimSpace(request.Get("street")),
+	}
 
 	reportDate := strings.TrimSpace(request.Get("date"))
 	if reportDate != "" {
-		layout := "January 2, 2006"
-		parsedReportDate, err := time.Parse(layout, reportDate)
+		parsedReportDate, err := ParseDate(reportDate)
 		if err != nil {
-			errMsg := fmt.Sprintf("Error parsing date %s : %v", reportDate, err)
-			c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{"error": errMsg})
+			c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
 			return
 		}
 
-		year, month, day = parsedReportDate.Year(), int(parsedReportDate.Month()), parsedReportDate.Day()
+		f.Year, f.Month, f.Day = parsedReportDate.Year, parsedReportDate.Month, parsedReportDate.Day
 	}
 
-	street := strings.TrimSpace(request.Get("street"))
-
-	crimeSceneReports, err := model.CrimeSceneReports(year, month, day, street)
+	crimeSceneReports, err := model.CrimeSceneReports(f)
 	if err != nil {
-		errMsg := fmt.Sprintf("Error getting CrimeSceneReports (parsedReportDate %s, street %s): %v", parsedReportDate, street, err)
+		errMsg := fmt.Sprintf("Error getting CrimeSceneReports (reportDate %s, street %s): %v", reportDate, f.Street, err)
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": errMsg})
 		return
 	}
 
 	var reports []CrimeSceneReport
 	for _, report := range crimeSceneReports {
-		var r CrimeSceneReport
-		r.DateFormatted = fmt.Sprintf("%s %d, %d", time.Month(report.Month).String(), report.Day, report.Year)
-		r.Street = report.Street
-		r.Description = report.Description
-		reports = append(reports, r)
+		dateFormatted := fmt.Sprintf("%s %d, %d", time.Month(report.Month).String(), report.Day, report.Year)
+
+		reports = append(reports, CrimeSceneReport{
+			DateFormatted: dateFormatted,
+			Street:        report.Street,
+			Description:   report.Description,
+		})
 	}
 
 	c.JSON(http.StatusOK, reports)

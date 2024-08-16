@@ -15,7 +15,13 @@ type Interview struct {
 	Transcript string
 }
 
-func Interviews(year int, month int, day int) ([]Interview, error) {
+type InterviewsFilter struct {
+	Year  int
+	Month int
+	Day   int
+}
+
+func Interviews(f InterviewsFilter) ([]Interview, error) {
 	var filters []string
 	query := `
 		SELECT
@@ -24,16 +30,16 @@ func Interviews(year int, month int, day int) ([]Interview, error) {
 	`
 	args := []any{}
 
-	if year != -1 && month != -1 && day != -1 {
+	if f.Year != -1 && f.Month != -1 && f.Day != -1 {
 		filters = append(filters, "year=? AND month=? AND day=?")
-		args = append(args, year, month, day)
+		args = append(args, f.Year, f.Month, f.Day)
 	}
 
 	query = QueryWithFilters(query, filters)
 
 	rows, err := store.DB.Query(query, args...)
 	if err != nil {
-		return nil, fmt.Errorf("Interviews [%q year, %q month, %q day] : %w", year, month, day, err)
+		return nil, fmt.Errorf("Interviews [%q year, %q month, %q day] : %w", f.Year, f.Month, f.Day, err)
 	}
 	defer rows.Close()
 
@@ -41,12 +47,12 @@ func Interviews(year int, month int, day int) ([]Interview, error) {
 	for rows.Next() {
 		var interview Interview
 		if err := rows.Scan(&interview.ID, &interview.Name, &interview.Year, &interview.Month, &interview.Day, &interview.Transcript); err != nil {
-			return nil, fmt.Errorf("Interviews [%q year, %q month, %q day] : %w", year, month, day, err)
+			return nil, fmt.Errorf("Interviews [%q year, %q month, %q day] : %w", f.Year, f.Month, f.Day, err)
 		}
 		interviews = append(interviews, interview)
 	}
 	if err := rows.Err(); err != nil {
-		return nil, fmt.Errorf("Interviews [%q year, %q month, %q day] : %w", year, month, day, err)
+		return nil, fmt.Errorf("Interviews [%q year, %q month, %q day] : %w", f.Year, f.Month, f.Day, err)
 	}
 
 	return interviews, nil
