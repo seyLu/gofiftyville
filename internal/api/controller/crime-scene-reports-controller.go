@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"encoding/json"
 	"fmt"
+	"net/http"
 	"strings"
 	"time"
 
@@ -27,7 +27,9 @@ func GetCrimeSceneReports(c *gin.Context) {
 		layout := "January 2, 2006"
 		parsedReportDate, err := time.Parse(layout, reportDate)
 		if err != nil {
-			fmt.Printf("Error parsing date %s : %v", reportDate, err)
+			errMsg := fmt.Sprintf("Error parsing date %s : %v", reportDate, err)
+			c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{"error": errMsg})
+			return
 		}
 
 		year, month, day = parsedReportDate.Year(), int(parsedReportDate.Month()), parsedReportDate.Day()
@@ -37,7 +39,9 @@ func GetCrimeSceneReports(c *gin.Context) {
 
 	crimeSceneReports, err := model.CrimeSceneReports(year, month, day, street)
 	if err != nil {
-		fmt.Printf("Error getting CrimeSceneReports (parsedReportDate %s, street %s): %v", parsedReportDate, street, err)
+		errMsg := fmt.Sprintf("Error getting CrimeSceneReports (parsedReportDate %s, street %s): %v", parsedReportDate, street, err)
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": errMsg})
+		return
 	}
 
 	var reports []CrimeSceneReport
@@ -49,11 +53,5 @@ func GetCrimeSceneReports(c *gin.Context) {
 		reports = append(reports, r)
 	}
 
-	reportsData, err := json.Marshal(reports)
-	if err != nil {
-		fmt.Printf("Could not marshal json: %s\n", err)
-		return
-	}
-
-	fmt.Println(string(reportsData))
+	c.JSON(http.StatusOK, reports)
 }

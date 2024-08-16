@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"encoding/json"
 	"fmt"
+	"net/http"
 	"strings"
 	"time"
 
@@ -27,31 +27,29 @@ func GetInterviews(c *gin.Context) {
 		layout := "January 2, 2006"
 		parsedInterviewDate, err := time.Parse(layout, interviewDate)
 		if err != nil {
-			fmt.Printf("Error parsing date %s : %v", parsedInterviewDate, err)
+			errMsg := fmt.Sprintf("Error parsing date %s : %v", parsedInterviewDate, err)
+			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": errMsg})
+			return
 		}
 
 		year, month, day = parsedInterviewDate.Year(), int(parsedInterviewDate.Month()), parsedInterviewDate.Day()
 	}
 
-	interviews, err := model.Interviews(year, month, day)
+	interviewsArr, err := model.Interviews(year, month, day)
 	if err != nil {
-		fmt.Printf("Error getting interviews date %s : %v", parsedInterviewDate, err)
+		errMsg := fmt.Sprintf("Error getting interviews date %s : %v", parsedInterviewDate, err)
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": errMsg})
+		return
 	}
 
-	var interviewsArr []Interview
-	for _, interview := range interviews {
+	var interviews []Interview
+	for _, interview := range interviewsArr {
 		var i Interview
 		i.Name = interview.Name
 		i.DateFormatted = fmt.Sprintf("%s %d, %d", time.Month(interview.Month).String(), interview.Day, interview.Year)
 		i.Transcript = interview.Transcript
-		interviewsArr = append(interviewsArr, i)
+		interviews = append(interviews, i)
 	}
 
-	interviewsData, err := json.Marshal(interviewsArr)
-	if err != nil {
-		fmt.Printf("Could not marshal json: %s\n", err)
-		return
-	}
-
-	fmt.Println(string(interviewsData))
+	c.JSON(http.StatusOK, interviews)
 }
