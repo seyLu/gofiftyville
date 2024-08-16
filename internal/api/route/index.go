@@ -5,5 +5,6 @@ import (
 )
 
 func AddRoutes(s *gin.RouterGroup) {
-	CrimeSceneReportsRoutes(s)
+	CrimeSceneReportsRoute(s)
+	InterviewsRoute(s)
 }

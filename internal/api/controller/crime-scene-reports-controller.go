@@ -10,7 +10,7 @@ import (
 	"github.com/seyLu/gofiftyville/internal/model"
 )
 
-type Report struct {
+type CrimeSceneReport struct {
 	DateFormatted string `json:"dateFormatted"`
 	Street        string `json:"street"`
 	Description   string `json:"description"`
@@ -21,10 +21,11 @@ func GetCrimeSceneReports(c *gin.Context) {
 
 	year, month, day := -1, -1, -1
 	parsedReportDate := ""
-	reportDate := strings.TrimSpace(request.Get("report-date"))
+
+	reportDate := strings.TrimSpace(request.Get("date"))
 	if reportDate != "" {
-		reportDateLayout := "January 2, 2006"
-		parsedReportDate, err := time.Parse(reportDateLayout, reportDate)
+		layout := "January 2, 2006"
+		parsedReportDate, err := time.Parse(layout, reportDate)
 		if err != nil {
 			fmt.Printf("Error parsing date %s : %v", reportDate, err)
 		}
@@ -39,9 +40,9 @@ func GetCrimeSceneReports(c *gin.Context) {
 		fmt.Printf("Error getting CrimeSceneReports (parsedReportDate %s, street %s): %v", parsedReportDate, street, err)
 	}
 
-	var reports []Report
+	var reports []CrimeSceneReport
 	for _, report := range crimeSceneReports {
-		var r Report
+		var r CrimeSceneReport
 		r.DateFormatted = fmt.Sprintf("%s %d, %d", time.Month(report.Month).String(), report.Day, report.Year)
 		r.Street = report.Street
 		r.Description = report.Description

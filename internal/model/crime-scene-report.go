@@ -17,8 +17,6 @@ type CrimeSceneReport struct {
 }
 
 func CrimeSceneReports(year int, month int, day int, street string) ([]CrimeSceneReport, error) {
-	var reports []CrimeSceneReport
-
 	var filters []string
 	query := `
 		SELECT
@@ -36,14 +34,7 @@ func CrimeSceneReports(year int, month int, day int, street string) ([]CrimeScen
 		args = append(args, strings.ToLower(street))
 	}
 
-	for i, filter := range filters {
-		switch i {
-		case 0:
-			query += fmt.Sprintf(" WHERE %s ", filter)
-		default:
-			query += fmt.Sprintf(" AND %s ", filter)
-		}
-	}
+	query = QueryWithFilters(query, filters)
 
 	rows, err := store.DB.Query(query, args...)
 	if err != nil {
@@ -51,6 +42,7 @@ func CrimeSceneReports(year int, month int, day int, street string) ([]CrimeScen
 	}
 	defer rows.Close()
 
+	var reports []CrimeSceneReport
 	for rows.Next() {
 		var report CrimeSceneReport
 		if err := rows.Scan(&report.ID, &report.Year, &report.Month, &report.Day, &report.Street, &report.Description); err != nil {

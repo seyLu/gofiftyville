@@ -5,7 +5,7 @@ import (
 	"github.com/seyLu/gofiftyville/internal/api/controller"
 )
 
-func CrimeSceneReportsRoutes(s *gin.RouterGroup) {
+func CrimeSceneReportsRoute(s *gin.RouterGroup) {
 	router := s.Group("/crime-scene-reports")
 	{
 		router.GET("", controller.GetCrimeSceneReports)
