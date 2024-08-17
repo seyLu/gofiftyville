@@ -4,6 +4,7 @@ go 1.22.6
 
 require (
 	github.com/gin-gonic/gin v1.10.0
+	github.com/guregu/null/v5 v5.0.0
 	github.com/ncruces/go-sqlite3 v0.18.0
 )
 
