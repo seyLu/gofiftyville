@@ -11,10 +11,10 @@ import (
 )
 
 type BakerySecurityLog struct {
-	DateFormatted string
-	TimeFormatted string
-	Activity      string
-	LicensePlate  string
+	DateFormatted string `json:"dateFormatted"`
+	TimeFormatted string `json:"timeFormatted"`
+	Activity      string `json:"activity"`
+	LicensePlate  string `json:"licensePlate"`
 }
 
 func GetBakerySecurityLogs(c *gin.Context) {

@@ -8,4 +8,5 @@ func AddRoutes(s *gin.RouterGroup) {
 	CrimeSceneReportsRoute(s)
 	InterviewsRoute(s)
 	BakerySecurityLogsRoute(s)
+	AtmTransactionsRoute(s)
 }
