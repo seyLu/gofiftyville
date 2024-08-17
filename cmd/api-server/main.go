@@ -3,8 +3,6 @@ package main
 import (
 	"log"
 
-	_ "github.com/ncruces/go-sqlite3/driver"
-	_ "github.com/ncruces/go-sqlite3/embed"
 	"github.com/seyLu/gofiftyville/internal/api"
 	"github.com/seyLu/gofiftyville/internal/store"
 )

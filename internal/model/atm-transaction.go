@@ -52,20 +52,20 @@ func AtmTransactions(f AtmTransactionsFilter) ([]AtmTransaction, error) {
 
 	rows, err := store.DB.Query(query, args...)
 	if err != nil {
-		return nil, fmt.Errorf("AtmTransaction [year %q month %q day %q atm_location %q transaction_type %q]: %w", f.Year, f.Month, f.Day, f.AtmLocation, f.TransactionType, err)
+		return nil, fmt.Errorf("AtmTransaction %+v : %w", f, err)
 	}
 
 	var transactions []AtmTransaction
 	for rows.Next() {
 		var transaction AtmTransaction
 		if err := rows.Scan(&transaction.ID, &transaction.AccountNumber, &transaction.Year, &transaction.Month, &transaction.Day, &transaction.AtmLocation, &transaction.TransactionType, &transaction.Amount); err != nil {
-			return nil, fmt.Errorf("AtmTransaction [year %q month %q day %q atm_location %q transaction_type %q]: %w", f.Year, f.Month, f.Day, f.AtmLocation, f.TransactionType, err)
+			return nil, fmt.Errorf("AtmTransaction %+v : %w", f, err)
 		}
 
 		transactions = append(transactions, transaction)
 	}
 	if err := rows.Err(); err != nil {
-		return nil, fmt.Errorf("AtmTransaction [year %q month %q day %q atm_location %q transaction_type %q]: %w", f.Year, f.Month, f.Day, f.AtmLocation, f.TransactionType, err)
+		return nil, fmt.Errorf("AtmTransaction %+v : %w", f, err)
 	}
 
 	return transactions, nil
