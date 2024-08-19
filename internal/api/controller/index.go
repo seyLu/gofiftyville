@@ -34,11 +34,27 @@ func ParseTime(timeFormatted string) (Time, error) {
 	layout := "03:04 PM"
 	parsedTime, err := time.Parse(layout, timeFormatted)
 	if err != nil {
-		return Time{}, fmt.Errorf("Error parsing time %s : %w", timeFormatted, err)
+		return Time{}, fmt.Errorf("error parsing time %s : %w", timeFormatted, err)
 	}
 
 	return Time{
 		Hour:   parsedTime.Hour(),
 		Minute: parsedTime.Minute(),
 	}, nil
+}
+
+func FormatDate(year int, month int, day int) string {
+	return fmt.Sprintf("%s %d, %d", time.Month(month).String(), day, year)
+}
+
+func FormatTime(hour int, minute int) string {
+	timeSuffix := "AM"
+	if hour >= 12 {
+		timeSuffix = "PM"
+	}
+	hour = hour % 12
+	if hour == 0 {
+		hour = 12
+	}
+	return fmt.Sprintf("%02d:%02d %s", hour, minute, timeSuffix)
 }
