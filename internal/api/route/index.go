@@ -11,4 +11,5 @@ func AddRoutes(s *gin.RouterGroup) {
 	AtmTransactionsRoute(s)
 	People(s)
 	PhoneCallsRotue(s)
+	FlightsRoute(s)
 }

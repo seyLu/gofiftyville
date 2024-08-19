@@ -54,8 +54,8 @@ func PhoneCalls(f PhoneCallsFilter) ([]PhoneCall, error) {
 		args = append(args, f.Duration)
 	}
 	if len(f.Callers) > 0 {
-		placeholders := strings.Repeat("?,", len(f.Callers))
-		placeholders = strings.TrimSuffix(placeholders, ",")
+		placeholders := strings.Repeat("?, ", len(f.Callers))
+		placeholders = strings.TrimSuffix(placeholders, ", ")
 		filters = append(filters, fmt.Sprintf("caller IN (%v)", placeholders))
 		for _, caller := range f.Callers {
 			args = append(args, caller)
@@ -74,7 +74,7 @@ func PhoneCalls(f PhoneCallsFilter) ([]PhoneCall, error) {
 	for rows.Next() {
 		var call PhoneCall
 		if err := rows.Scan(&call.ID, &call.Caller, &call.Receiver, &call.Year, &call.Month, &call.Day, &call.Duration); err != nil {
-			return nil, err
+			return nil, fmt.Errorf("PhoneCalls %+v: %w", f, err)
 		}
 		calls = append(calls, call)
 	}

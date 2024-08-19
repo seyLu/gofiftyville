@@ -13,10 +13,10 @@ import (
 )
 
 type PhoneCall struct {
-	Caller   string
-	Receiver string
-	Date     string
-	Duration int
+	Caller   string `json:"caller"`
+	Receiver string `json:"receiver"`
+	Date     string `json:"date"`
+	Duration int    `json:"duration"`
 }
 
 func GetPhoneCalls(c *gin.Context) {
@@ -58,7 +58,7 @@ func GetPhoneCalls(c *gin.Context) {
 	}
 	if len(callers) != 0 {
 		validIneq := []string{">", "<"}
-		if slices.Contains(validIneq, f.DurationInequality) {
+		if len(f.DurationInequality) == 1 && slices.Contains(validIneq, f.DurationInequality) {
 			f.Callers = callers
 		} else {
 			errMsg := fmt.Sprintf("Invalid Duration Inequality %s", f.DurationInequality)
