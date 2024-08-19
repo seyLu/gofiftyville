@@ -24,23 +24,44 @@ func GetPeople(c *gin.Context) {
 	request := c.Request.URL.Query()
 
 	f := model.PeopleFilter{
-		LicensePlate:  strings.TrimSpace(request.Get("license-plate")),
-		AccountNumber: -1,
+		LicensePlates:  nil,
+		AccountNumbers: nil,
+		PhoneNumbers:   nil,
 	}
 
-	accountNumber := strings.TrimSpace(request.Get("account-number"))
-	if accountNumber != "" {
-		aN, err := strconv.Atoi(accountNumber)
+	licensePlates := request["license-plate"]
+	for i, licensePlate := range licensePlates {
+		licensePlates[i] = strings.TrimSpace(licensePlate)
+	}
+	if len(licensePlates) > 0 {
+		f.LicensePlates = licensePlates
+	}
+
+	accountNumbersReq := request["account-number"]
+	var accountNumbers []int
+	for _, accountNumber := range accountNumbersReq {
+		aN, err := strconv.Atoi(strings.TrimSpace(accountNumber))
 		if err != nil {
 			c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
 			return
 		}
-		f.AccountNumber = aN
+		accountNumbers = append(accountNumbers, aN)
+	}
+	if len(accountNumbers) > 0 {
+		f.AccountNumbers = accountNumbers
+	}
+
+	phoneNumbers := request["phone-number"]
+	for i, phoneNumber := range phoneNumbers {
+		phoneNumbers[i] = strings.TrimSpace(phoneNumber)
+	}
+	if len(phoneNumbers) > 0 {
+		f.PhoneNumbers = phoneNumbers
 	}
 
 	people, err := model.People(f)
 	if err != nil {
-		errMsg := fmt.Sprintf("Error getting People (licensePlate %s, accountNumber %s): %v", f.LicensePlate, accountNumber, err)
+		errMsg := fmt.Sprintf("Error getting People (licensePlates %v, accountNumbers %v, phoneNumbers %v): %v", f.LicensePlates, f.AccountNumbers, f.PhoneNumbers, err)
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": errMsg})
 		return
 	}

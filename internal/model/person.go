@@ -22,8 +22,9 @@ type PersonBankAccount struct {
 }
 
 type PeopleFilter struct {
-	LicensePlate  string
-	AccountNumber int
+	LicensePlates  []string
+	AccountNumbers []int
+	PhoneNumbers   []string
 }
 
 func People(f PeopleFilter) ([]PersonBankAccount, error) {
@@ -38,13 +39,29 @@ func People(f PeopleFilter) ([]PersonBankAccount, error) {
 	`
 	args := []any{}
 
-	if f.LicensePlate != "" {
-		filters = append(filters, "LOWER(license_plate)=?")
-		args = append(args, strings.ToLower(f.LicensePlate))
+	if len(f.LicensePlates) > 0 {
+		placeholders := strings.Repeat("?, ", len(f.LicensePlates))
+		placeholders = strings.TrimSuffix(placeholders, ", ")
+		filters = append(filters, fmt.Sprintf("license_plate IN (%v)", placeholders))
+		for _, licensePlate := range f.LicensePlates {
+			args = append(args, licensePlate)
+		}
 	}
-	if f.AccountNumber != -1 {
-		filters = append(filters, "account_number=?")
-		args = append(args, f.AccountNumber)
+	if len(f.AccountNumbers) > 0 {
+		placeholders := strings.Repeat("?, ", len(f.AccountNumbers))
+		placeholders = strings.TrimSuffix(placeholders, ", ")
+		filters = append(filters, fmt.Sprintf("account_number IN (%v)", placeholders))
+		for _, accountNumber := range f.AccountNumbers {
+			args = append(args, accountNumber)
+		}
+	}
+	if len(f.PhoneNumbers) > 0 {
+		placeholders := strings.Repeat("?, ", len(f.PhoneNumbers))
+		placeholders = strings.TrimSuffix(placeholders, ", ")
+		filters = append(filters, fmt.Sprintf("phone_number IN (%v)", placeholders))
+		for _, phoneNumber := range f.PhoneNumbers {
+			args = append(args, phoneNumber)
+		}
 	}
 
 	query = QueryWithFilters(query, filters)
