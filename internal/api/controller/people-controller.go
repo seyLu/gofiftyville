@@ -42,7 +42,8 @@ func GetPeople(c *gin.Context) {
 	for _, accountNumber := range accountNumbersReq {
 		aN, err := strconv.Atoi(strings.TrimSpace(accountNumber))
 		if err != nil {
-			c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+			errMsg := fmt.Sprintf("(1) controller.GetPeople (licensePlates %v, accountNumbers %v, phoneNumbers %v): %v", licensePlates, accountNumbersReq, "", err)
+			c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{"error": errMsg})
 			return
 		}
 		accountNumbers = append(accountNumbers, aN)
@@ -61,7 +62,7 @@ func GetPeople(c *gin.Context) {
 
 	people, err := model.People(f)
 	if err != nil {
-		errMsg := fmt.Sprintf("Error getting People (licensePlates %v, accountNumbers %v, phoneNumbers %v): %v", f.LicensePlates, f.AccountNumbers, f.PhoneNumbers, err)
+		errMsg := fmt.Sprintf("(2) controller.GetPeople (licensePlates %v, accountNumbers %v, phoneNumbers %v): %v", f.LicensePlates, f.AccountNumbers, f.PhoneNumbers, err)
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": errMsg})
 		return
 	}

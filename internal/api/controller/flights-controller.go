@@ -59,7 +59,7 @@ func GetFlights(c *gin.Context) {
 
 	flights, err := model.Flights(f)
 	if err != nil {
-		errMsg := fmt.Sprintf("(3) controller.Flights (date %s, passportNumbers %v): %v", flightDate, passportNumbersReq, err)
+		errMsg := fmt.Sprintf("(3) controller.Flights (date %s, passportNumbers %v): %v", flightDate, f.PassportNumbers, err)
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": errMsg})
 		return
 	}

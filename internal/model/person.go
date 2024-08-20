@@ -72,7 +72,7 @@ func People(f PeopleFilter) ([]PersonBankAccount, error) {
 
 	rows, err := store.DB.Query(query, args...)
 	if err != nil {
-		return nil, fmt.Errorf("People %+v: %w", f, err)
+		return nil, fmt.Errorf("-> (1) model.People %+v: %w", f, err)
 	}
 	defer rows.Close()
 
@@ -83,12 +83,12 @@ func People(f PeopleFilter) ([]PersonBankAccount, error) {
 			&account.Name, &account.PhoneNumber, &account.PassportNumber, &account.LicensePlate,
 			&account.AccountNumber, &account.CreationYear,
 		); err != nil {
-			return nil, fmt.Errorf("People %+v: %w", f, err)
+			return nil, fmt.Errorf("-> (2) model.People %+v: %w", f, err)
 		}
 		accounts = append(accounts, account)
 	}
 	if err := rows.Err(); err != nil {
-		return nil, fmt.Errorf("People %+v: %w", f, err)
+		return nil, fmt.Errorf("-> (3) model.People %+v: %w", f, err)
 	}
 
 	return accounts, nil
