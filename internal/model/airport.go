@@ -44,7 +44,7 @@ func Airports(f AirportsFilter) ([]Airport, error) {
 
 	rows, err := store.DB.Query(query, args...)
 	if err != nil {
-		return nil, fmt.Errorf("Airports %+v: %w", f, err)
+		return nil, fmt.Errorf("-> (1) model.Airports %+v: %w", f, err)
 	}
 	defer rows.Close()
 
@@ -52,7 +52,7 @@ func Airports(f AirportsFilter) ([]Airport, error) {
 	for rows.Next() {
 		var airport Airport
 		if err := rows.Scan(&airport.ID, &airport.Abbreviation, &airport.FullName, &airport.City); err != nil {
-			return nil, fmt.Errorf("Airports %+v: %w", f, err)
+			return nil, fmt.Errorf("-> (2) model.Airports %+v: %w", f, err)
 		}
 
 		airports = append(airports, airport)
