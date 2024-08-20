@@ -71,7 +71,7 @@ func Flights(f FlightsFilter) ([]PassengerFlight, error) {
 
 	rows, err := store.DB.Query(query, args...)
 	if err != nil {
-		return nil, fmt.Errorf("Flights %+v: %w", f, err)
+		return nil, fmt.Errorf("-> (1) model.Flights %+v: %w", f, err)
 	}
 	defer rows.Close()
 
@@ -83,10 +83,13 @@ func Flights(f FlightsFilter) ([]PassengerFlight, error) {
 			&flight.Year, &flight.Month, &flight.Day, &flight.Hour, &flight.Minute,
 			&flight.OriginAirport, &flight.DestinationAirport,
 		); err != nil {
-			return nil, fmt.Errorf("Flights %+v: %w", f, err)
+			return nil, fmt.Errorf("-> (2) model.Flights %+v: %w", f, err)
 		}
 
 		flights = append(flights, flight)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("-> (3) model.Flights %+v: %w", f, err)
 	}
 
 	return flights, nil

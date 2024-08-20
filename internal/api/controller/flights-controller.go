@@ -34,7 +34,8 @@ func GetFlights(c *gin.Context) {
 	if flightDate != "" {
 		parsedFlightDate, err := ParseDate(flightDate)
 		if err != nil {
-			c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+			errMsg := fmt.Sprintf("(1) controller.GetFlights (date %s, passportNumbers %v): %v", flightDate, nil, err)
+			c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{"error": errMsg})
 			return
 		}
 
@@ -46,7 +47,8 @@ func GetFlights(c *gin.Context) {
 	for _, passportNumber := range passportNumbersReq {
 		pN, err := strconv.Atoi(strings.TrimSpace(passportNumber))
 		if err != nil {
-			c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+			errMsg := fmt.Sprintf("(2) controller.GetFlights (date %s, passportNumbers %v): %v", flightDate, passportNumbersReq, err)
+			c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{"error": errMsg})
 			return
 		}
 		passportNumbers = append(passportNumbers, pN)
@@ -57,7 +59,7 @@ func GetFlights(c *gin.Context) {
 
 	flights, err := model.Flights(f)
 	if err != nil {
-		errMsg := fmt.Sprintf("Error getting Flights (date %s, passportNumbers %v): %v", flightDate, passportNumbers, err)
+		errMsg := fmt.Sprintf("(3) controller.Flights (date %s, passportNumbers %v): %v", flightDate, passportNumbersReq, err)
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": errMsg})
 		return
 	}
