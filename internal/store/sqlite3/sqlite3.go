@@ -1,4 +1,4 @@
-package store
+package sqlite3
 
 import (
 	"database/sql"
@@ -9,9 +9,9 @@ import (
 
 var DB *sql.DB
 
-func InitDatabase() error {
+func InitDB() error {
 	var err error
-	DB, err = sql.Open("sqlite3", "../../internal/store/fiftyville.db")
+	DB, err = sql.Open("sqlite3", "../../internal/store/sqlite3/fiftyville.db")
 	if err != nil {
 		return err
 	}

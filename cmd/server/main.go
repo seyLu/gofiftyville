@@ -4,11 +4,11 @@ import (
 	"log"
 
 	"github.com/seyLu/gofiftyville/internal/api"
-	"github.com/seyLu/gofiftyville/internal/store"
+	"github.com/seyLu/gofiftyville/internal/store/postgres"
 )
 
 func main() {
-	err := store.InitDatabase()
+	err := postgres.InitDB()
 	if err != nil {
 		log.Fatal(err)
 	}
