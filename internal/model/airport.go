@@ -57,6 +57,9 @@ func Airports(f AirportsFilter) ([]Airport, error) {
 
 		airports = append(airports, airport)
 	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("-> (3) model.Airports %+v : %w", f, err)
+	}
 
 	return airports, nil
 }

@@ -28,7 +28,7 @@ func GetAirports(c *gin.Context) {
 	if flightTime != "" {
 		parsedFlightTime, err := ParseTime(flightTime)
 		if err != nil {
-			errMsg := fmt.Sprintf("-> (1) controller.Airports (fullName %s, time %s): %v", f.FullName, flightTime, err)
+			errMsg := fmt.Sprintf("(1) controller.GetAirports (fullName %s, time %s): %v", f.FullName, flightTime, err)
 			c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{"error": errMsg})
 			return
 		}
@@ -38,7 +38,7 @@ func GetAirports(c *gin.Context) {
 
 	airportsArr, err := model.Airports(f)
 	if err != nil {
-		errMsg := fmt.Sprintf("-> (2) controller.Airports (fullName %s, time %s): %v", f.FullName, flightTime, err)
+		errMsg := fmt.Sprintf("(2) controller.GetAirports (fullName %s, time %s): %v", f.FullName, flightTime, err)
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": errMsg})
 		return
 	}

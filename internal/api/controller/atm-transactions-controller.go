@@ -33,7 +33,8 @@ func GetAtmTransactions(c *gin.Context) {
 	if transactionDate != "" {
 		parsedTransactionDate, err := ParseDate(transactionDate)
 		if err != nil {
-			c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+			errMsg := fmt.Sprintf("(1) controller.GetAtmTransactions (date %s, atm-location %s, transaction-type %s): %v", transactionDate, f.AtmLocation, f.TransactionType, err)
+			c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{"error": errMsg})
 			return
 		}
 
@@ -42,7 +43,7 @@ func GetAtmTransactions(c *gin.Context) {
 
 	atmTransactions, err := model.AtmTransactions(f)
 	if err != nil {
-		errMsg := fmt.Sprintf("Error getting AtmTransactions (date %s, atm-location %s, transaction-type %s): %v", transactionDate, f.AtmLocation, f.TransactionType, err)
+		errMsg := fmt.Sprintf("(2) controller.GetAtmTransactions (date %s, atm-location %s, transaction-type %s): %v", transactionDate, f.AtmLocation, f.TransactionType, err)
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": errMsg})
 		return
 	}
