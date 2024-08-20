@@ -13,4 +13,5 @@ func AddRoutes(s *gin.RouterGroup) {
 	PhoneCallsRotue(s)
 	FlightsRoute(s)
 	AirportsRoute(s)
+	FinalAnswerRoute(s)
 }
