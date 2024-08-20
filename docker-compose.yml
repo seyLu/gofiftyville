@@ -1,6 +1,41 @@
 version: "3.9"
 
 services:
+  db:
+    image: postgres:alpine
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=fiftyville
+    volumes:
+      - ./dump/fiftyville.sql:/dump.sql
+      - ./scripts/initdb.sh:/docker-entrypoint-initdb.d/initdb.sh
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U root -d fiftyville" ]
+      interval: 3s
+      timeout: 5s
+      retries: 5
+    restart: always
+    networks:
+      - api-network
+
+  api:
+    build: .
+    environment:
+      DB_HOST: db
+      DB_USER: root
+      DB_PASSWORD: root
+      DB_NAME: fiftyville
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    networks:
+      - api-network
+
   proxy:
     image: nginx
     volumes:
@@ -16,33 +51,6 @@ services:
       - api-network
     restart: always
 
-  api:
-    build: .
-    depends_on:
-      db:
-        condition: service_healthy
-    networks:
-      - api-network
-
-  db:
-    image: postgres:alpine
-    environment:
-      - POSTGRES_DB=fiftyville
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root
-    volumes:
-      - ./dump/fiftyville.sql:/dump.sql
-      - ./scripts/initdb.sh:/docker-entrypoint-initdb.d/initdb.sh
-    ports:
-      - "5432:5432"
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U root -d fiftyville" ]
-      interval: 3s
-      timeout: 5s
-      retries: 5
-    restart: always
-    networks:
-      - api-network
 
 networks:
   api-network:

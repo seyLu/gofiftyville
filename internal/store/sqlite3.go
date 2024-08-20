@@ -1,4 +1,4 @@
-package sqlite3
+package store
 
 import (
 	"database/sql"
@@ -7,11 +7,9 @@ import (
 	_ "github.com/ncruces/go-sqlite3/embed"
 )
 
-var DB *sql.DB
-
-func InitDB() error {
+func InitSqlite3DB() error {
 	var err error
-	DB, err = sql.Open("sqlite3", "../../internal/store/sqlite3/fiftyville.db")
+	DB, err = sql.Open("sqlite3", "../../internal/store/fiftyville.db")
 	if err != nil {
 		return err
 	}
