@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"slices"
@@ -35,7 +36,8 @@ func GetPhoneCalls(c *gin.Context) {
 	if callDate != "" {
 		parsedCallDate, err := ParseDate(callDate)
 		if err != nil {
-			c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+			errMsg := fmt.Sprintf("(1) controller.GetPhoneCalls (callDate %s, durationInequality %s, duration %s, callers %s): %v", callDate, f.DurationInequality, "", "", err)
+			c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{"error": errMsg})
 			return
 		}
 
@@ -46,7 +48,8 @@ func GetPhoneCalls(c *gin.Context) {
 	if duration != "" {
 		d, err := strconv.Atoi(duration)
 		if err != nil {
-			c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+			errMsg := fmt.Sprintf("(2) controller.GetPhoneCalls (callDate %s, durationInequality %s, duration %s, callers %s): %v", callDate, f.DurationInequality, duration, "", err)
+			c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{"error": errMsg})
 			return
 		}
 		f.Duration = d
@@ -61,7 +64,8 @@ func GetPhoneCalls(c *gin.Context) {
 		if len(f.DurationInequality) == 1 && slices.Contains(validIneq, f.DurationInequality) {
 			f.Callers = callers
 		} else {
-			errMsg := fmt.Sprintf("Invalid Duration Inequality %s", f.DurationInequality)
+			err := errors.New("invalid durationInequality. valid values are '<' or '>.")
+			errMsg := fmt.Sprintf("(3) controller.GetPhoneCalls (callDate %s, durationInequality %s, duration %s, callers %s): %v", callDate, f.DurationInequality, duration, callers, err)
 			c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": errMsg})
 			return
 		}
@@ -69,7 +73,7 @@ func GetPhoneCalls(c *gin.Context) {
 
 	phoneCalls, err := model.PhoneCalls(f)
 	if err != nil {
-		errMsg := fmt.Sprintf("Error getting PhoneCalls (callDate %s, durationInequality %s, duration %s, callers %s): %v", callDate, f.DurationInequality, duration, callers, err)
+		errMsg := fmt.Sprintf("(4) controller.GetPhoneCalls (callDate %s, durationInequality %s, duration %v, callers %v): %v", callDate, f.DurationInequality, f.Duration, f.Callers, err)
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": errMsg})
 		return
 	}

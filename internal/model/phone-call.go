@@ -48,7 +48,7 @@ func PhoneCalls(f PhoneCallsFilter) ([]PhoneCall, error) {
 		case "<":
 			filter = "duration<?"
 		default:
-			return nil, fmt.Errorf("PhoneCalls %+v: %w", f, errors.New("invalid 'duration inequality' filter"))
+			return nil, fmt.Errorf("-> (1) model.PhoneCalls %+v: %w", f, errors.New("invalid 'durationInequality' filter. valid values are '<' or '>'."))
 		}
 		filters = append(filters, filter)
 		args = append(args, f.Duration)
@@ -66,7 +66,7 @@ func PhoneCalls(f PhoneCallsFilter) ([]PhoneCall, error) {
 
 	rows, err := store.DB.Query(query, args...)
 	if err != nil {
-		return nil, fmt.Errorf("PhoneCalls %+v: %w", f, err)
+		return nil, fmt.Errorf("-> (2) model.PhoneCalls %+v: %w", f, err)
 	}
 	defer rows.Close()
 
@@ -74,12 +74,12 @@ func PhoneCalls(f PhoneCallsFilter) ([]PhoneCall, error) {
 	for rows.Next() {
 		var call PhoneCall
 		if err := rows.Scan(&call.ID, &call.Caller, &call.Receiver, &call.Year, &call.Month, &call.Day, &call.Duration); err != nil {
-			return nil, fmt.Errorf("PhoneCalls %+v: %w", f, err)
+			return nil, fmt.Errorf("-> (3) model.PhoneCalls %+v: %w", f, err)
 		}
 		calls = append(calls, call)
 	}
 	if err := rows.Err(); err != nil {
-		return nil, fmt.Errorf("PhoneCalls %+v: %w", f, err)
+		return nil, fmt.Errorf("-> (4) model.PhoneCalls %+v: %w", f, err)
 	}
 
 	return calls, nil
