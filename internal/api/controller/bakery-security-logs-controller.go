@@ -35,7 +35,8 @@ func GetBakerySecurityLogs(c *gin.Context) {
 	if logDate != "" {
 		parsedLogDate, err := ParseDate(logDate)
 		if err != nil {
-			c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+			errMsg := fmt.Sprintf("(1) controller.GetBakerySecurityLogs (date %s, time %s, time-2 %s, activity %s): %v", logDate, "", "", f.Activity, err)
+			c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{"error": errMsg})
 			return
 		}
 
@@ -46,7 +47,8 @@ func GetBakerySecurityLogs(c *gin.Context) {
 	if logTime != "" {
 		parsedLogTime, err := ParseTime(logTime)
 		if err != nil {
-			c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+			errMsg := fmt.Sprintf("(2) controller.GetBakerySecurityLogs (date %s, time %s, time-2 %s, activity %s): %v", logDate, logTime, "", f.Activity, err)
+			c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{"error": errMsg})
 			return
 		}
 
@@ -57,7 +59,8 @@ func GetBakerySecurityLogs(c *gin.Context) {
 	if logTime2 != "" {
 		parsedLogTime2, err := ParseTime(logTime2)
 		if err != nil {
-			c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+			errMsg := fmt.Sprintf("(3) controller.GetBakerySecurityLogs (date %s, time %s, time-2 %s, activity %s): %v", logDate, logTime, logTime2, f.Activity, err)
+			c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{"error": errMsg})
 			return
 		}
 
@@ -66,7 +69,7 @@ func GetBakerySecurityLogs(c *gin.Context) {
 
 	bakerySecurityLogs, err := model.BakerySecurityLogs(f)
 	if err != nil {
-		errMsg := fmt.Sprintf("Error getting BakerySecurityLogs (date %s, time %s, time-2 %s, activity %s): %v", logDate, logTime, logTime2, f.Activity, err)
+		errMsg := fmt.Sprintf("(4) controller.GetBakerySecurityLogs (date %s, time %s, time-2 %s, activity %s): %v", logDate, logTime, logTime2, f.Activity, err)
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": errMsg})
 		return
 	}

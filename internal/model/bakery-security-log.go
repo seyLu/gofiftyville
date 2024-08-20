@@ -61,7 +61,7 @@ func BakerySecurityLogs(f BakerySecurityLogsFilter) ([]BakerySecurityLog, error)
 
 	rows, err := store.DB.Query(query, args...)
 	if err != nil {
-		return nil, fmt.Errorf("BakerySecurityLogs %+v : %w", f, err)
+		return nil, fmt.Errorf("-> (1) model.BakerySecurityLogs %+v : %w", f, err)
 	}
 	defer rows.Close()
 
@@ -69,13 +69,13 @@ func BakerySecurityLogs(f BakerySecurityLogsFilter) ([]BakerySecurityLog, error)
 	for rows.Next() {
 		var securityLog BakerySecurityLog
 		if err := rows.Scan(&securityLog.ID, &securityLog.Year, &securityLog.Month, &securityLog.Day, &securityLog.Hour, &securityLog.Minute, &securityLog.Activity, &securityLog.LicensePlate); err != nil {
-			return nil, fmt.Errorf("BakerySecurityLogs %+v : %w", f, err)
+			return nil, fmt.Errorf("-> (2) model.BakerySecurityLogs %+v : %w", f, err)
 		}
 
 		securityLogs = append(securityLogs, securityLog)
 	}
 	if err := rows.Err(); err != nil {
-		return nil, fmt.Errorf("BakerySecurityLogs %+v : %w", f, err)
+		return nil, fmt.Errorf("-> (3) model.BakerySecurityLogs %+v : %w", f, err)
 	}
 
 	return securityLogs, nil
