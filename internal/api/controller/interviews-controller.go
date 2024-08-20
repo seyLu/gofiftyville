@@ -29,7 +29,8 @@ func GetInterviews(c *gin.Context) {
 	if interviewDate != "" {
 		parsedInterviewDate, err := ParseDate(interviewDate)
 		if err != nil {
-			c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+			errMsg := fmt.Sprintf("(1) controller.GetInterviews date %s : %v", interviewDate, err)
+			c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{"error": errMsg})
 			return
 		}
 
@@ -38,7 +39,7 @@ func GetInterviews(c *gin.Context) {
 
 	interviewsArr, err := model.Interviews(f)
 	if err != nil {
-		errMsg := fmt.Sprintf("Error getting interviews date %s : %v", interviewDate, err)
+		errMsg := fmt.Sprintf("(2) controller.GetInterviews date %s : %v", interviewDate, err)
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": errMsg})
 		return
 	}
