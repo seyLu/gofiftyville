@@ -13,5 +13,5 @@ func main() {
 		log.Fatal(err)
 	}
 
-	api.StartServer("localhost", 3000)
+	api.StartServer()
 }

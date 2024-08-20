@@ -8,7 +8,7 @@ import (
 	"github.com/seyLu/gofiftyville/internal/api/route"
 )
 
-func StartServer(domain string, port int) {
+func StartServer() {
 	app := gin.New()
 
 	router := app.Group("/api/v1")
@@ -29,6 +29,5 @@ func StartServer(domain string, port int) {
 
 	route.AddRoutes(router)
 
-	host := fmt.Sprintf("%v:%v", domain, port)
-	app.Run(host)
+	app.Run()
 }
