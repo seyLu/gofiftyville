@@ -45,7 +45,7 @@ func CrimeSceneReports(f CrimeSceneReportsFilter) ([]CrimeSceneReport, error) {
 
 	rows, err := store.DB.Query(query, args...)
 	if err != nil {
-		return nil, fmt.Errorf("CrimeSceneReports %+v: %w", f, err)
+		return nil, fmt.Errorf("-> (1) model.CrimeSceneReports %+v: %w", f, err)
 	}
 	defer rows.Close()
 
@@ -53,12 +53,12 @@ func CrimeSceneReports(f CrimeSceneReportsFilter) ([]CrimeSceneReport, error) {
 	for rows.Next() {
 		var report CrimeSceneReport
 		if err := rows.Scan(&report.ID, &report.Year, &report.Month, &report.Day, &report.Street, &report.Description); err != nil {
-			return nil, fmt.Errorf("CrimeSceneReports %+v: %w", f, err)
+			return nil, fmt.Errorf("-> (2) model.CrimeSceneReports %+v: %w", f, err)
 		}
 		reports = append(reports, report)
 	}
 	if err := rows.Err(); err != nil {
-		return nil, fmt.Errorf("CrimeSceneReports %+v: %w", f, err)
+		return nil, fmt.Errorf("-> (3) model.CrimeSceneReports %+v: %w", f, err)
 	}
 
 	return reports, nil

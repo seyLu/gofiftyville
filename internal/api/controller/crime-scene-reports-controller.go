@@ -30,7 +30,8 @@ func GetCrimeSceneReports(c *gin.Context) {
 	if reportDate != "" {
 		parsedReportDate, err := ParseDate(reportDate)
 		if err != nil {
-			c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+			errMsg := fmt.Sprintf("(1) controller.GetCrimeSceneReports (reportDate %s, street %s): %v", reportDate, f.Street, err)
+			c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{"error": errMsg})
 			return
 		}
 
@@ -39,7 +40,7 @@ func GetCrimeSceneReports(c *gin.Context) {
 
 	crimeSceneReports, err := model.CrimeSceneReports(f)
 	if err != nil {
-		errMsg := fmt.Sprintf("Error getting CrimeSceneReports (reportDate %s, street %s): %v", reportDate, f.Street, err)
+		errMsg := fmt.Sprintf("(2) controller.GetCrimeSceneReports (reportDate %s, street %s): %v", reportDate, f.Street, err)
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": errMsg})
 		return
 	}
