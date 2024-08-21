@@ -35,6 +35,7 @@ services:
       - "8080:8080"
     networks:
       - api-network
+    restart: always
 
   proxy:
     image: nginx

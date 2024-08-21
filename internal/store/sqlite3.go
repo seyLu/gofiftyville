@@ -9,7 +9,7 @@ import (
 
 func InitSqlite3DB() error {
 	var err error
-	DB, err = sql.Open("sqlite3", "../../internal/store/fiftyville.db")
+	DB, err = sql.Open("sqlite3", "internal/store/fiftyville.db")
 	if err != nil {
 		return err
 	}
