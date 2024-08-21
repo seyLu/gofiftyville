@@ -11,9 +11,9 @@ import (
 func InitPostgresDB() error {
 	host := os.Getenv("DB_HOST")
 	port := 5432
-	dbname := os.Getenv("DB_NAME")
 	user := os.Getenv("DB_USER")
 	password := os.Getenv("DB_PASSWORD")
+	dbname := os.Getenv("DB_NAME")
 
 	var err error
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
