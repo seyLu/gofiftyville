@@ -2,13 +2,22 @@ package main
 
 import (
 	"log"
+	"os"
 
 	"github.com/seyLu/gofiftyville/internal/api"
 	"github.com/seyLu/gofiftyville/internal/store"
 )
 
 func main() {
-	err := store.InitPostgresDB()
+	var err error
+	switch os.Getenv("DEV") {
+	case "local":
+		err = store.InitSqlite3DB()
+	case "docker":
+		err = store.InitPostgresDB()
+	default:
+		err = store.InitSqlite3DB()
+	}
 	if err != nil {
 		log.Fatal(err)
 	}
