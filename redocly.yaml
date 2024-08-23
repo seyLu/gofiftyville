@@ -1,0 +1,15 @@
+apis:
+  v1:
+    root: ./openapi/gofiftyville.yaml
+    output: ./docs/index.html
+
+theme:
+  openapi:
+    schemaExpansionLevel: 2
+    generateCodeSamples:
+      languages:
+        - lang: curl
+        - lang: Go
+
+extends:
+  - recommended

@@ -1,0 +1,63 @@
+openapi: 3.1.0
+info:
+  title: Gofiftyville API
+  description: Fiftyville API written in Go.
+  version: 1.0.0
+  contact:
+    url: 'https://gofityville.com/api/v1'
+  x-logo:
+    url: '../detective_golang.svg'
+    altText: Gofiftyville Logo
+  license:
+    name: MIT
+    url: 'https://opensource.org/license/mit/'
+servers:
+  - url: 'https://gofityville.com/api/v1'
+
+paths:
+  /crime-scene-reports:
+    get:
+      summary: Crime Scene Reports
+      description: Get Crime Scene Reports
+      operationId: getCrimeSceneReports
+      parameters:
+        - in: query
+          name: date
+          style: deepObject
+          schema:
+            type: string
+          required: false
+          description: Date in 'January 2, 2006' format
+        - in: query
+          name: street
+          style: deepObject
+          schema:
+            type: string
+          required: false
+          description: Street name
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCrimeSceneReports'
+              examples:
+                default:
+                  value:
+                    - dateFormatted: 'January 1, 2021'
+                      street: 'Chamberlin Street'
+                      description: 'Credit card fraud took place at 00:53. Two people witnessed the event.'
+                    - dateFormatted: 'January 6, 2021'
+                      street: 'Aydede'
+                      description: 'Reckless driving took place at 07:18. No known witnesses.'
+                    - dateFormatted: 'January 22, 2021'
+                      street: 'Humphrey Lane'
+                      description: 'Expired parking meter took place at 09:47. One person witnessed the incident.'
+
+        '400':
+          description: Bad request
+        '404':
+          description: Not found
+        '422':
+          description: Unprocessable Entity
