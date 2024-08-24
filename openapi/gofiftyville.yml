@@ -6,7 +6,7 @@ info:
   contact:
     url: 'https://gofityville.com/api/v1'
   x-logo:
-    url: '../detective-golang.svg'
+    url: 'https://raw.githubusercontent.com/seyLu/gofiftyville/main/detective-golang.svg'
     altText: Gofiftyville Logo
   license:
     name: MIT

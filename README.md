@@ -1,5 +1,5 @@
 <div align="center">
-    <img height=150 src="https://github.com/seyLu/gofiftyville/blob/main/detective-golang.svg" alt="gofiftyville icon">
+    <img height=150 src="https://raw.githubusercontent.com/seyLu/gofiftyville/main/detective-golang.svg" alt="gofiftyville icon">
     <h1>Gofiftyville</h1>
     <p>Fiftyville API written in Go.</p>
     <p>
