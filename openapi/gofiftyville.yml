@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: '3.0.3'
 info:
   title: Gofiftyville API
   description: Fiftyville API written in Go.
@@ -21,20 +21,8 @@ paths:
       description: Get Crime Scene Reports
       operationId: getCrimeSceneReports
       parameters:
-        - in: query
-          name: date
-          style: deepObject
-          schema:
-            type: string
-          required: false
-          description: Date in 'January 2, 2006' format
-        - in: query
-          name: street
-          style: deepObject
-          schema:
-            type: string
-          required: false
-          description: Street name
+        - $ref: '#/components/parameters/Date'
+        - $ref: '#/components/parameters/Street'
       responses:
         '200':
           description: Success
@@ -45,13 +33,13 @@ paths:
               examples:
                 default:
                   value:
-                    - dateFormatted: 'January 1, 2021'
+                    - date: 'January 1, 2021'
                       street: 'Chamberlin Street'
                       description: 'Credit card fraud took place at 00:53. Two people witnessed the event.'
-                    - dateFormatted: 'January 6, 2021'
+                    - date: 'January 6, 2021'
                       street: 'Aydede'
                       description: 'Reckless driving took place at 07:18. No known witnesses.'
-                    - dateFormatted: 'January 22, 2021'
+                    - date: 'January 22, 2021'
                       street: 'Humphrey Lane'
                       description: 'Expired parking meter took place at 09:47. One person witnessed the incident.'
 
@@ -61,3 +49,39 @@ paths:
           description: Not found
         '422':
           description: Unprocessable Entity
+
+components:
+  schemas:
+    GetCrimeSceneReports:
+      description: List of crime scene reports.
+      type: array
+      items:
+        $ref: '#/components/schemas/CrimeSceneReport'
+    CrimeSceneReport:
+      description: Daily operating hours for the museum.
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+        street:
+          type: string
+        description:
+          type: string
+      required:
+        - date
+        - street
+        - description
+
+  parameters:
+    Date:
+      name: date
+      in: query
+      schema:
+        type: string
+        format: date
+    Street:
+      name: street
+      in: query
+      schema:
+        type: string

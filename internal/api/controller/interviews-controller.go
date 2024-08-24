@@ -11,9 +11,9 @@ import (
 )
 
 type Interview struct {
-	Name          string `json:"name"`
-	DateFormatted string `json:"dateFormatted"`
-	Transcript    string `json:"transcript"`
+	Name       string `json:"name"`
+	Date       string `json:"date"`
+	Transcript string `json:"transcript"`
 }
 
 func GetInterviews(c *gin.Context) {
@@ -46,12 +46,12 @@ func GetInterviews(c *gin.Context) {
 
 	var interviews []Interview
 	for _, interview := range interviewsArr {
-		dateFormatted := fmt.Sprintf("%s %d, %d", time.Month(interview.Month).String(), interview.Day, interview.Year)
+		date := fmt.Sprintf("%s %d, %d", time.Month(interview.Month).String(), interview.Day, interview.Year)
 
 		interviews = append(interviews, Interview{
-			Name:          interview.Name,
-			DateFormatted: dateFormatted,
-			Transcript:    interview.Transcript,
+			Name:       interview.Name,
+			Date:       date,
+			Transcript: interview.Transcript,
 		})
 	}
 

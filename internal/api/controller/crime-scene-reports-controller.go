@@ -11,9 +11,9 @@ import (
 )
 
 type CrimeSceneReport struct {
-	DateFormatted string `json:"dateFormatted"`
-	Street        string `json:"street"`
-	Description   string `json:"description"`
+	Date        string `json:"date"`
+	Street      string `json:"street"`
+	Description string `json:"description"`
 }
 
 func GetCrimeSceneReports(c *gin.Context) {
@@ -47,12 +47,12 @@ func GetCrimeSceneReports(c *gin.Context) {
 
 	var reports []CrimeSceneReport
 	for _, report := range crimeSceneReports {
-		dateFormatted := fmt.Sprintf("%s %d, %d", time.Month(report.Month).String(), report.Day, report.Year)
+		date := fmt.Sprintf("%s %d, %d", time.Month(report.Month).String(), report.Day, report.Year)
 
 		reports = append(reports, CrimeSceneReport{
-			DateFormatted: dateFormatted,
-			Street:        report.Street,
-			Description:   report.Description,
+			Date:        date,
+			Street:      report.Street,
+			Description: report.Description,
 		})
 	}
 

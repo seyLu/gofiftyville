@@ -12,7 +12,7 @@ import (
 
 type AtmTransaction struct {
 	AccountNumber   int    `json:"accountNumber"`
-	DateFormatted   string `json:"dateFormatted"`
+	Date            string `json:"date"`
 	AtmLocation     string `json:"atmLocation"`
 	TransactionType string `json:"transactionType"`
 	Amount          int    `json:"amount"`
@@ -50,11 +50,11 @@ func GetAtmTransactions(c *gin.Context) {
 
 	var transactions []AtmTransaction
 	for _, transaction := range atmTransactions {
-		dateFormatted := fmt.Sprintf("%s %d, %d", time.Month(transaction.Month).String(), transaction.Day, transaction.Year)
+		date := fmt.Sprintf("%s %d, %d", time.Month(transaction.Month).String(), transaction.Day, transaction.Year)
 
 		transactions = append(transactions, AtmTransaction{
 			AccountNumber:   transaction.AccountNumber,
-			DateFormatted:   dateFormatted,
+			Date:            date,
 			AtmLocation:     transaction.AtmLocation,
 			TransactionType: transaction.TransactionType,
 			Amount:          transaction.Amount,

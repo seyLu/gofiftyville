@@ -1,6 +1,6 @@
 apis:
   v1:
-    root: ./openapi/gofiftyville.yaml
+    root: ./openapi/gofiftyville.yml
     output: ./docs/index.html
 
 theme:

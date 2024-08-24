@@ -16,11 +16,11 @@ type Time struct {
 	Minute int
 }
 
-func ParseDate(dateFormatted string) (Date, error) {
+func ParseDate(date string) (Date, error) {
 	layout := "January 2, 2006"
-	parsedDate, err := time.Parse(layout, dateFormatted)
+	parsedDate, err := time.Parse(layout, date)
 	if err != nil {
-		return Date{}, fmt.Errorf("error parsing date %s : %w", dateFormatted, err)
+		return Date{}, fmt.Errorf("error parsing date %s : %w", date, err)
 	}
 
 	return Date{

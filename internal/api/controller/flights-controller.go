@@ -14,7 +14,7 @@ import (
 type PassengerFlight struct {
 	PassportNumber     int    `json:"passportNumber"`
 	Seat               string `json:"seat"`
-	DateFormatted      string `json:"dateFormatted"`
+	Date               string `json:"date"`
 	TimeFormatted      string `json:"timeFormatted"`
 	OriginAirport      string `json:"originAirport"`
 	DestinationAirport string `json:"destinationAirport"`
@@ -66,7 +66,7 @@ func GetFlights(c *gin.Context) {
 
 	var passengerFlights []PassengerFlight
 	for _, flight := range flights {
-		dateFormatted := fmt.Sprintf("%s %d, %d", time.Month(flight.Month).String(), flight.Day, flight.Year)
+		date := fmt.Sprintf("%s %d, %d", time.Month(flight.Month).String(), flight.Day, flight.Year)
 		timeSuffix := "AM"
 		if flight.Hour >= 12 {
 			timeSuffix = "PM"
@@ -80,7 +80,7 @@ func GetFlights(c *gin.Context) {
 		passengerFlights = append(passengerFlights, PassengerFlight{
 			PassportNumber:     flight.PassportNumber,
 			Seat:               flight.Seat,
-			DateFormatted:      dateFormatted,
+			Date:               date,
 			TimeFormatted:      timeFormatted,
 			OriginAirport:      flight.OriginAirport,
 			DestinationAirport: flight.DestinationAirport,

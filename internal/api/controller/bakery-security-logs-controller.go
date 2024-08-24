@@ -11,7 +11,7 @@ import (
 )
 
 type BakerySecurityLog struct {
-	DateFormatted string `json:"dateFormatted"`
+	Date          string `json:"date"`
 	TimeFormatted string `json:"timeFormatted"`
 	Activity      string `json:"activity"`
 	LicensePlate  string `json:"licensePlate"`
@@ -76,7 +76,7 @@ func GetBakerySecurityLogs(c *gin.Context) {
 
 	var securityLogs []BakerySecurityLog
 	for _, securityLog := range bakerySecurityLogs {
-		dateFormatted := fmt.Sprintf("%s %d, %d", time.Month(securityLog.Month).String(), securityLog.Day, securityLog.Year)
+		date := fmt.Sprintf("%s %d, %d", time.Month(securityLog.Month).String(), securityLog.Day, securityLog.Year)
 		timeSuffix := "AM"
 		if securityLog.Hour >= 12 {
 			timeSuffix = "PM"
@@ -88,7 +88,7 @@ func GetBakerySecurityLogs(c *gin.Context) {
 		timeFormatted := fmt.Sprintf("%02d:%02d %s", hour, securityLog.Minute, timeSuffix)
 
 		securityLogs = append(securityLogs, BakerySecurityLog{
-			DateFormatted: dateFormatted,
+			Date:          date,
 			TimeFormatted: timeFormatted,
 			Activity:      securityLog.Activity,
 			LicensePlate:  securityLog.LicensePlate,

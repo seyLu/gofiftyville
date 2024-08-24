@@ -80,12 +80,12 @@ func GetPhoneCalls(c *gin.Context) {
 
 	var calls []PhoneCall
 	for _, call := range phoneCalls {
-		dateFormatted := fmt.Sprintf("%s %d, %d", time.Month(call.Month).String(), call.Day, call.Year)
+		date := fmt.Sprintf("%s %d, %d", time.Month(call.Month).String(), call.Day, call.Year)
 
 		calls = append(calls, PhoneCall{
 			Caller:   call.Caller,
 			Receiver: call.Receiver,
-			Date:     dateFormatted,
+			Date:     date,
 			Duration: call.Duration,
 		})
 	}
