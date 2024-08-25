@@ -1,0 +1,4 @@
+name: street
+in: query
+schema:
+  type: string

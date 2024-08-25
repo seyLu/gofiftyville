@@ -1,0 +1,36 @@
+get:
+  summary: Crime Scene Reports
+  description: List Crime Scene Reports
+  operationId: getCrimeSceneReports
+  parameters:
+    - $ref: ../components/parameters/Date.yml
+    - $ref: ../components/parameters/Street.yml
+  responses:
+    '200':
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/GetCrimeSceneReports.yml
+          examples:
+            default:
+              value:
+                - date: January 1, 2021
+                  street: Chamberlin Street
+                  description: >-
+                    Credit card fraud took place at 00:53. Two people witnessed
+                    the event.
+                - date: January 6, 2021
+                  street: Aydede
+                  description: Reckless driving took place at 07:18. No known witnesses.
+                - date: January 22, 2021
+                  street: Humphrey Lane
+                  description: >-
+                    Expired parking meter took place at 09:47. One person
+                    witnessed the incident.
+    '400':
+      description: Bad request
+    '404':
+      description: Not found
+    '422':
+      description: Unprocessable Entity

@@ -1,0 +1,14 @@
+description: Daily operating hours for the museum.
+type: object
+properties:
+  date:
+    type: string
+    format: date
+  street:
+    type: string
+  description:
+    type: string
+required:
+  - date
+  - street
+  - description

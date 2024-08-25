@@ -1,0 +1,18 @@
+openapi: 3.0.3
+info:
+  title: Gofiftyville API
+  description: Fiftyville API written in Go.
+  version: 1.0.0
+  contact:
+    url: https://gofityville.com/api/v1
+  x-logo:
+    url: https://raw.githubusercontent.com/seyLu/gofiftyville/main/detective-golang.svg
+    altText: Gofiftyville Logo
+  license:
+    name: MIT
+    url: https://opensource.org/license/mit/
+servers:
+  - url: https://gofityville.com/api/v1
+paths:
+  /crime-scene-reports:
+    $ref: paths/crime-scene-reports.yml
