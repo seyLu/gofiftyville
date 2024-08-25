@@ -1,7 +1,7 @@
 get:
   summary: Crime Scene Reports
   description: List Crime Scene Reports
-  operationId: getCrimeSceneReports
+  operationId: GetCrimeSceneReports
   parameters:
     - $ref: ../components/parameters/Date.yml
     - $ref: ../components/parameters/Street.yml

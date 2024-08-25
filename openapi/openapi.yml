@@ -14,5 +14,7 @@ info:
 servers:
   - url: https://gofityville.com/api/v1
 paths:
+  /interviews:
+    $ref: paths/interviews.yml
   /crime-scene-reports:
     $ref: paths/crime-scene-reports.yml

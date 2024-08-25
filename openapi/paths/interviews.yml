@@ -1,0 +1,34 @@
+get:
+  summary: Interviews
+  description: List Interviews
+  operationId: GetInterviews
+  parameters:
+    - $ref: ../components/parameters/Date.yml
+  responses:
+    '200':
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/GetInterviews.yml
+          examples:
+            default:
+              value:
+                - name: Melissa
+                  date: January 1, 2021
+                  transcript: >-
+                    "Then we have stopped all the holes. And now we must be silent and wait."
+                - name: Wayne
+                  date: January 6, 2021
+                  transcript: >-
+                    "You reasoned it out beautifully,” I exclaimed in unfeigned admiration. “It is so long a chain, and yet every link rings true."
+                - name: Carol
+                  date: February 4, 2021
+                  transcript: >-
+                    “And the ring?” I asked, glancing at a remarkable brilliant which sparkled upon his finger.
+    '400':
+      description: Bad request
+    '404':
+      description: Not found
+    '422':
+      description: Unprocessable Entity

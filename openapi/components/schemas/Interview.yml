@@ -1,10 +1,10 @@
-description: Crime Scene Reports.
+description: Interviews.
 type: object
 properties:
+  name:
+    type: string
   date:
     type: string
     format: date
-  street:
-    type: string
-  description:
+  transcript:
     type: string
