@@ -1,0 +1,4 @@
+description: List of flights.
+type: array
+items:
+  $ref: ../items/Flight.yml

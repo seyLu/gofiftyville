@@ -1,0 +1,11 @@
+name: passport-number
+in: query
+schema:
+  type: array
+  items:
+    type: integer
+    format: passport-number
+  examples:
+    - 6264773605
+    - 3642612721
+    - 4356447308

@@ -1,0 +1,19 @@
+description: Interview.
+type: object
+properties:
+  passportNumber:
+    type: string
+    format: passport-number
+  seat:
+    type: string
+    format: seat
+  date:
+    type: string
+    format: date
+  time:
+    type: string
+    format: time
+  originAirport:
+    type: string
+  destinationAirport:
+    type: string

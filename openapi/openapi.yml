@@ -26,3 +26,5 @@ paths:
     $ref: paths/people.yml
   /phone-calls:
     $ref: paths/phone-calls.yml
+  /flights:
+    $ref: paths/flights.yml

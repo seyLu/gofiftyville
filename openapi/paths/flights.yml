@@ -1,0 +1,39 @@
+get:
+  summary: Flights
+  description: List Flights
+  operationId: GetFlights
+  parameters:
+    - $ref: ../components/parameters/Date.yml
+    - $ref: ../components/parameters/PassportNumber.yml
+  responses:
+    '200':
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/GetFlights.yml
+          examples:
+            default:
+              value:
+                - passportNumber: 4120608613
+                  seat: 4D
+                  date: July 26, 2021
+                  time: 01:56 PM
+                  originAirport: O'Hare International Airport
+                  destinationAirport: Fiftyville Regional Airport
+                - passportNumber: 6128131458
+                  seat: 5D
+                  date: July 28, 2021
+                  time: 01:49 PM
+                  originAirport: Fiftyville Regional Airport
+                  destinationAirport: Dallas/Fort Worth International Airport
+                - passportNumber: 3699913849
+                  seat: 9C
+                  date: July 30, 2021
+                  time: 08:56 PM
+                  originAirport: Fiftyville Regional Airport
+                  destinationAirport: Beijing Capital International Airport
+    '400':
+      description: Bad request
+    '422':
+      description: Unprocessable Entity
