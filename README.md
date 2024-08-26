@@ -30,7 +30,7 @@ The list of valid api endpoints are available at the [docs](https://seylu.github
 #### Running the server
 
 ```bash
-go run cmd/server
+go run ./cmd/server
 ```
 
 You can access the server at `localhost:8080/api/v1/:endpoint`.
