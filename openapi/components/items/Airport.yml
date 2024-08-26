@@ -1,4 +1,4 @@
-description: ATM Transaction.
+description: Airport.
 type: object
 properties:
   abbreviation:

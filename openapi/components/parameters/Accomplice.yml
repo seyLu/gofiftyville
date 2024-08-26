@@ -1,0 +1,4 @@
+name: accomplice
+in: query
+schema:
+  type: string

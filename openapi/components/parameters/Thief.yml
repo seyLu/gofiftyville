@@ -1,0 +1,4 @@
+name: thief
+in: query
+schema:
+  type: string

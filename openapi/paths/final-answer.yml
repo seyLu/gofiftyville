@@ -1,0 +1,35 @@
+get:
+  summary: Final Answer
+  description: Submit Final Answer
+  operationId: GetFinalAnswer
+  parameters:
+    - $ref: ../components/parameters/Thief.yml
+    - $ref: ../components/parameters/City.yml
+    - $ref: ../components/parameters/Accomplice.yml
+  responses:
+    '200':
+      description: Success
+      content:
+        application/json:
+          schema:
+            description: Correct Final Answer.
+            type: object
+            properties:
+              message:
+                type: string
+          example:
+            message: Congratulations! You found the culprit!
+    '400':
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            description: Wrong Final Answer.
+            type: object
+            properties:
+              error:
+                type: string
+          example:
+            error: Wrong Answer. Please try again.
+    '422':
+      description: Unprocessable Entity

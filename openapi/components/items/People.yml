@@ -1,4 +1,4 @@
-description: Phone Call.
+description: People.
 type: object
 properties:
   name:

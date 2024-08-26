@@ -1,4 +1,4 @@
-description: Interview.
+description: Flight.
 type: object
 properties:
   passportNumber:

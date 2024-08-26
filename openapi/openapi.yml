@@ -30,3 +30,5 @@ paths:
     $ref: paths/flights.yml
   /airports:
     $ref: paths/airports.yml
+  /final-answer:
+    $ref: paths/final-answer.yml
