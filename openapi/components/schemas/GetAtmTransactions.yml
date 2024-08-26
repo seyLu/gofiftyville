@@ -1,0 +1,4 @@
+description: List of atm transactions.
+type: array
+items:
+  $ref: ../items/AtmTransaction.yml

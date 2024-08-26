@@ -1,0 +1,7 @@
+name: transaction-type
+in: query
+schema:
+  type: string
+  enum:
+    - deposit
+    - withdraw

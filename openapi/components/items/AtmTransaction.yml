@@ -1,0 +1,14 @@
+description: Bakery Security Log.
+type: object
+properties:
+  accountNumber:
+    type: integer
+  date:
+    type: string
+    format: date
+  atmLocation:
+    type: string
+  transactionType:
+    type: string
+  amount:
+    type: integer

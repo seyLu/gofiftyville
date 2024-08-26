@@ -1,0 +1,37 @@
+get:
+  summary: ATM Transactions
+  description: List ATM Transactions
+  operationId: GetAtmTransactions
+  parameters:
+    - $ref: ../components/parameters/Date.yml
+    - $ref: ../components/parameters/AtmLocation.yml
+    - $ref: ../components/parameters/TransactionType.yml
+  responses:
+    '200':
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/GetAtmTransactions.yml
+          examples:
+            default:
+              value:
+                - accountNumber: 57022441
+                  date: July 26, 2021
+                  atmLocation: Humphrey Lane
+                  transactionType: deposit
+                  amount: 40
+                - accountNumber: 47306903
+                  date: July 28, 2021
+                  atmLocation: Daboin Sanchez Drive
+                  transactionType: withdraw
+                  amount: 90
+                - accountNumber: 19531272
+                  date: August 1, 2021
+                  atmLocation: Blumberg Boulevard
+                  transactionType: deposit
+                  amount: 60
+    '400':
+      description: Bad request
+    '422':
+      description: Unprocessable Entity
