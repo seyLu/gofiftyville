@@ -12,7 +12,7 @@ import (
 
 type BakerySecurityLog struct {
 	Date          string `json:"date"`
-	TimeFormatted string `json:"timeFormatted"`
+	TimeFormatted string `json:"time"`
 	Activity      string `json:"activity"`
 	LicensePlate  string `json:"licensePlate"`
 }
@@ -85,11 +85,11 @@ func GetBakerySecurityLogs(c *gin.Context) {
 		if hour == 0 {
 			hour = 12
 		}
-		timeFormatted := fmt.Sprintf("%02d:%02d %s", hour, securityLog.Minute, timeSuffix)
+		time := fmt.Sprintf("%02d:%02d %s", hour, securityLog.Minute, timeSuffix)
 
 		securityLogs = append(securityLogs, BakerySecurityLog{
 			Date:          date,
-			TimeFormatted: timeFormatted,
+			TimeFormatted: time,
 			Activity:      securityLog.Activity,
 			LicensePlate:  securityLog.LicensePlate,
 		})

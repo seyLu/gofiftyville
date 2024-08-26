@@ -1,0 +1,4 @@
+description: List of bakery security logs.
+type: array
+items:
+  $ref: ../items/BakerySecurityLog.yml

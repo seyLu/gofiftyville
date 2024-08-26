@@ -1,0 +1,13 @@
+description: Bakery Security Log.
+type: object
+properties:
+  date:
+    type: string
+    format: date
+  time:
+    type: string
+    format: time
+  activity:
+    type: string
+  licensePlate:
+    type: string

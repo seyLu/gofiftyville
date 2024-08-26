@@ -1,4 +1,4 @@
 description: List of interviews.
 type: array
 items:
-  $ref: ./Interview.yml
+  $ref: ../items/Interview.yml

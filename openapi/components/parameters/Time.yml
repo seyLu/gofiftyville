@@ -1,0 +1,5 @@
+name: time
+in: query
+schema:
+  type: string
+  format: time

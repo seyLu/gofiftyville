@@ -1,4 +1,4 @@
 description: List of crime scene reports.
 type: array
 items:
-  $ref: ./CrimeSceneReport.yml
+  $ref: ../items/CrimeSceneReport.yml

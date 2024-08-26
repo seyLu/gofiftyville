@@ -18,3 +18,5 @@ paths:
     $ref: paths/interviews.yml
   /crime-scene-reports:
     $ref: paths/crime-scene-reports.yml
+  /bakery-security-logs:
+    $ref: paths/bakery-security-logs.yml

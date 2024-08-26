@@ -1,0 +1,37 @@
+get:
+  summary: Bakery Security Logs
+  description: Bakery Security Logs
+  operationId: GetBakerySecurityLogs
+  parameters:
+    - $ref: ../components/parameters/Date.yml
+    - $ref: ../components/parameters/Time.yml
+    - $ref: ../components/parameters/Time2.yml
+    - $ref: ../components/parameters/Activity.yml
+  responses:
+    '200':
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/GetBakerySecurityLogs.yml
+          examples:
+            default:
+              value:
+                - date: July 25, 2021
+                  time: 07:01 AM
+                  activity: entrance
+                  licensePlate: 0R0FW39
+                - date: July 26, 2021
+                  time: 02:07 PM
+                  activity: exit
+                  licensePlate: 0WZS77X
+                - date: July 28, 2021
+                  time: 08:59 AM
+                  activity: entrance
+                  licensePlate: O784M2U
+    '400':
+      description: Bad request
+    '404':
+      description: Not found
+    '422':
+      description: Unprocessable Entity
