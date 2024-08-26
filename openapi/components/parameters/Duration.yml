@@ -1,0 +1,4 @@
+name: duration
+in: query
+schema:
+  type: integer

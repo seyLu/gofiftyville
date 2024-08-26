@@ -1,0 +1,14 @@
+description: Bakery Security Log.
+type: object
+properties:
+  caller:
+    type: string
+    format: phone-number
+  receiver:
+    type: string
+    format: phone-number
+  date:
+    type: string
+    format: date
+  duration:
+    type: integer

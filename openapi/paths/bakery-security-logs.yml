@@ -1,6 +1,6 @@
 get:
   summary: Bakery Security Logs
-  description: Bakery Security Logs
+  description: List Bakery Security Logs
   operationId: GetBakerySecurityLogs
   parameters:
     - $ref: ../components/parameters/Date.yml

@@ -1,0 +1,11 @@
+name: caller
+in: query
+schema:
+  type: array
+  items:
+    type: string
+    format: phone-number
+  examples:
+    - (604) 555-0153
+    - (901) 555-8732
+    - (247) 555-7205

@@ -1,0 +1,35 @@
+get:
+  summary: Phone Calls
+  description: List Phone Calls
+  operationId: GetPhoneCalls
+  parameters:
+    - $ref: ../components/parameters/Date.yml
+    - $ref: ../components/parameters/DurationInequality.yml
+    - $ref: ../components/parameters/Duration.yml
+    - $ref: ../components/parameters/Caller.yml
+  responses:
+    '200':
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/GetPhoneCalls.yml
+          examples:
+            default:
+              value:
+                - caller: (123) 555-5144
+                  receiver: (007) 555-2874
+                  date: July 25, 2021
+                  duration: 243
+                - caller: (260) 555-0610
+                  receiver: (464) 555-2162
+                  date: July 27, 2021
+                  duration: 282
+                - caller: (932) 555-1504
+                  receiver: (547) 555-8781
+                  date: July 31, 2021
+                  duration: 383
+    '400':
+      description: Bad request
+    '422':
+      description: Unprocessable Entity

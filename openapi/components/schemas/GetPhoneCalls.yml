@@ -1,0 +1,4 @@
+description: List of phone calls.
+type: array
+items:
+  $ref: ../items/PhoneCall.yml
