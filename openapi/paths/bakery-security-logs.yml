@@ -31,7 +31,5 @@ get:
                   licensePlate: O784M2U
     '400':
       description: Bad request
-    '404':
-      description: Not found
     '422':
       description: Unprocessable Entity

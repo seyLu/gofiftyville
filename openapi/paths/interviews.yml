@@ -28,7 +28,5 @@ get:
                     “And the ring?” I asked, glancing at a remarkable brilliant which sparkled upon his finger.
     '400':
       description: Bad request
-    '404':
-      description: Not found
     '422':
       description: Unprocessable Entity

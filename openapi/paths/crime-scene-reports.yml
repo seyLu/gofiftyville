@@ -30,7 +30,5 @@ get:
                     witnessed the incident.
     '400':
       description: Bad request
-    '404':
-      description: Not found
     '422':
       description: Unprocessable Entity
