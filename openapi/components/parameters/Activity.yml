@@ -2,3 +2,6 @@ name: activity
 in: query
 schema:
   type: string
+  enum:
+    - entrance
+    - exit

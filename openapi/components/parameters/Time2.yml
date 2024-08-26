@@ -3,3 +3,4 @@ in: query
 schema:
   type: string
   format: time
+  example: 03:04 PM
