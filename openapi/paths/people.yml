@@ -1,0 +1,40 @@
+get:
+  summary: People
+  description: List People
+  operationId: GetPeople
+  parameters:
+    - $ref: ../components/parameters/LicensePlate.yml
+    - $ref: ../components/parameters/AccountNumber.yml
+    - $ref: ../components/parameters/PhoneNumber.yml
+  responses:
+    '200':
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/GetPeople.yml
+          examples:
+            default:
+              value:
+                - name: Kaelyn
+                  phoneNumber: (098) 555-1164
+                  passportNumber: 8304650265
+                  licensePlate: I449449
+                  accountNumber: 86363979
+                  creationYear: 2010
+                - name: Billy
+                  phoneNumber: (060) 555-2489
+                  passportNumber: 9290922261
+                  licensePlate: 2HB7G9N
+                  accountNumber: 56648519
+                  creationYear: 2011
+                - name: Alexis
+                  phoneNumber: (814) 555-5180
+                  passportNumber: 5310124622
+                  licensePlate: X4G3938
+                  accountNumber: 95773068
+                  creationYear: 2016
+    '400':
+      description: Bad request
+    '422':
+      description: Unprocessable Entity

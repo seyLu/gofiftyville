@@ -1,4 +1,4 @@
-description: Interviews.
+description: Interview.
 type: object
 properties:
   name:

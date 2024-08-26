@@ -1,0 +1,11 @@
+name: account-number
+in: query
+schema:
+  type: array
+  items:
+    type: integer
+    format: account-number
+  examples:
+    - 14180174
+    - 42445987
+    - 70504954

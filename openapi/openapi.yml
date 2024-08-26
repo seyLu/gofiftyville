@@ -22,5 +22,7 @@ paths:
     $ref: paths/bakery-security-logs.yml
   /atm-transactions:
     $ref: paths/atm-transactions.yml
+  /people:
+    $ref: paths/people.yml
   /phone-calls:
     $ref: paths/phone-calls.yml

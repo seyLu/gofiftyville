@@ -1,0 +1,11 @@
+name: license-plate
+in: query
+schema:
+  type: array
+  items:
+    type: string
+    format: license-plate
+  examples:
+    - W2CT78U
+    - HN8I106
+    - 47KK91C

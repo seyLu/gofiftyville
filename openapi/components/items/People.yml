@@ -1,0 +1,20 @@
+description: Phone Call.
+type: object
+properties:
+  name:
+    type: string
+  phone-number:
+    type: string
+    format: phone-number
+  passportNumber:
+    type: integer
+    format: passport-number
+  licensePlate:
+    type: string
+    format: license-plate
+  accountNumber:
+    type: integer
+    format: account-number
+  creationYear:
+    type: integer
+    format: year

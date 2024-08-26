@@ -1,0 +1,4 @@
+description: List of people.
+type: array
+items:
+  $ref: ../items/People.yml
