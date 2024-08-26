@@ -27,3 +27,5 @@ go.work.sum
 # 'fresh' generated tmp dirs
 tmp
 /**/*/tmp
+
+.vscode/
