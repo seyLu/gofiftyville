@@ -1,0 +1,30 @@
+get:
+  summary: Airports
+  description: List Airports
+  operationId: GetAirports
+  parameters:
+    - $ref: ../components/parameters/FullName.yml
+    - $ref: ../components/parameters/FlightTime.yml
+  responses:
+    '200':
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/GetAirports.yml
+          examples:
+            default:
+              value:
+                - abbreviation: DXB
+                  fullName: Dubai International Airport
+                  city: Dubai
+                - abbreviation: DEL
+                  fullName: Indira Gandhi International Airport
+                  city: Delhi
+                - abbreviation: CDG
+                  fullName: Charles de Gaulle Airport
+                  city: Paris
+    '400':
+      description: Bad request
+    '422':
+      description: Unprocessable Entity

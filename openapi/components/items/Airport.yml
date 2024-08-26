@@ -1,0 +1,9 @@
+description: ATM Transaction.
+type: object
+properties:
+  abbreviation:
+    type: string
+  fullName:
+    type: string
+  city:
+    type: string
