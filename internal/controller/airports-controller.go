@@ -16,15 +16,15 @@ type Airport struct {
 }
 
 func GetAirports(c *gin.Context) {
-	request := c.Request.URL.Query()
+	req := c.Request.URL.Query()
 
 	f := model.AirportsFilter{
-		FullName: strings.TrimSpace(request.Get("full-name")),
+		FullName: strings.TrimSpace(req.Get("full-name")),
 		Hour:     -1,
 		Minute:   -1,
 	}
 
-	flightTime := strings.TrimSpace(request.Get("flight-time"))
+	flightTime := strings.TrimSpace(req.Get("flight-time"))
 	if flightTime != "" {
 		parsedFlightTime, err := ParseTime(flightTime)
 		if err != nil {

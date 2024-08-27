@@ -20,12 +20,12 @@ var answerMap map[string]string = map[string]string{
 }
 
 func GetFinalAnswer(c *gin.Context) {
-	request := c.Request.URL.Query()
+	req := c.Request.URL.Query()
 
 	f := FinalAnswerFilter{
-		Thief:      strings.TrimSpace(request.Get("thief")),
-		City:       strings.TrimSpace(request.Get("city")),
-		Accomplice: strings.TrimSpace(request.Get("accomplice")),
+		Thief:      strings.TrimSpace(req.Get("thief")),
+		City:       strings.TrimSpace(req.Get("city")),
+		Accomplice: strings.TrimSpace(req.Get("accomplice")),
 	}
 
 	isThief := strings.EqualFold(answerMap["thief"], f.Thief)

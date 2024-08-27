@@ -17,16 +17,16 @@ type CrimeSceneReport struct {
 }
 
 func GetCrimeSceneReports(c *gin.Context) {
-	request := c.Request.URL.Query()
+	req := c.Request.URL.Query()
 
 	f := model.CrimeSceneReportsFilter{
 		Year:   -1,
 		Month:  -1,
 		Day:    -1,
-		Street: strings.TrimSpace(request.Get("street")),
+		Street: strings.TrimSpace(req.Get("street")),
 	}
 
-	reportDate := strings.TrimSpace(request.Get("date"))
+	reportDate := strings.TrimSpace(req.Get("date"))
 	if reportDate != "" {
 		parsedReportDate, err := ParseDate(reportDate)
 		if err != nil {

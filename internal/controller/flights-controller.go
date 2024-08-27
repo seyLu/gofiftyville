@@ -21,7 +21,7 @@ type PassengerFlight struct {
 }
 
 func GetFlights(c *gin.Context) {
-	request := c.Request.URL.Query()
+	req := c.Request.URL.Query()
 
 	f := model.FlightsFilter{
 		Year:            -1,
@@ -30,7 +30,7 @@ func GetFlights(c *gin.Context) {
 		PassportNumbers: nil,
 	}
 
-	flightDate := strings.TrimSpace(request.Get("date"))
+	flightDate := strings.TrimSpace(req.Get("date"))
 	if flightDate != "" {
 		parsedFlightDate, err := ParseDate(flightDate)
 		if err != nil {
@@ -42,7 +42,7 @@ func GetFlights(c *gin.Context) {
 		f.Year, f.Month, f.Day = parsedFlightDate.Year, parsedFlightDate.Month, parsedFlightDate.Day
 	}
 
-	passportNumbersReq := request["passport-number"]
+	passportNumbersReq := req["passport-number"]
 	var passportNumbers []int
 	for _, passportNumber := range passportNumbersReq {
 		pN, err := strconv.Atoi(strings.TrimSpace(passportNumber))

@@ -17,7 +17,7 @@ type Interview struct {
 }
 
 func GetInterviews(c *gin.Context) {
-	request := c.Request.URL.Query()
+	req := c.Request.URL.Query()
 
 	f := model.InterviewsFilter{
 		Year:  -1,
@@ -25,7 +25,7 @@ func GetInterviews(c *gin.Context) {
 		Day:   -1,
 	}
 
-	interviewDate := strings.TrimSpace(request.Get("date"))
+	interviewDate := strings.TrimSpace(req.Get("date"))
 	if interviewDate != "" {
 		parsedInterviewDate, err := ParseDate(interviewDate)
 		if err != nil {

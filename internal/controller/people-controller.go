@@ -21,7 +21,7 @@ type PersonBankAccount struct {
 }
 
 func GetPeople(c *gin.Context) {
-	request := c.Request.URL.Query()
+	req := c.Request.URL.Query()
 
 	f := model.PeopleFilter{
 		LicensePlates:  nil,
@@ -29,7 +29,7 @@ func GetPeople(c *gin.Context) {
 		PhoneNumbers:   nil,
 	}
 
-	licensePlates := request["license-plate"]
+	licensePlates := req["license-plate"]
 	for i, licensePlate := range licensePlates {
 		licensePlates[i] = strings.TrimSpace(licensePlate)
 	}
@@ -37,7 +37,7 @@ func GetPeople(c *gin.Context) {
 		f.LicensePlates = licensePlates
 	}
 
-	accountNumbersReq := request["account-number"]
+	accountNumbersReq := req["account-number"]
 	var accountNumbers []int
 	for _, accountNumber := range accountNumbersReq {
 		aN, err := strconv.Atoi(strings.TrimSpace(accountNumber))
@@ -52,7 +52,7 @@ func GetPeople(c *gin.Context) {
 		f.AccountNumbers = accountNumbers
 	}
 
-	phoneNumbers := request["phone-number"]
+	phoneNumbers := req["phone-number"]
 	for i, phoneNumber := range phoneNumbers {
 		phoneNumbers[i] = strings.TrimSpace(phoneNumber)
 	}

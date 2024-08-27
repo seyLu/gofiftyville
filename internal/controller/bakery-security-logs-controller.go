@@ -18,7 +18,7 @@ type BakerySecurityLog struct {
 }
 
 func GetBakerySecurityLogs(c *gin.Context) {
-	request := c.Request.URL.Query()
+	req := c.Request.URL.Query()
 
 	f := model.BakerySecurityLogsFilter{
 		Year:     -1,
@@ -28,10 +28,10 @@ func GetBakerySecurityLogs(c *gin.Context) {
 		Minute:   -1,
 		Hour2:    -1,
 		Minute2:  -1,
-		Activity: strings.TrimSpace(request.Get("activity")),
+		Activity: strings.TrimSpace(req.Get("activity")),
 	}
 
-	logDate := strings.TrimSpace(request.Get("date"))
+	logDate := strings.TrimSpace(req.Get("date"))
 	if logDate != "" {
 		parsedLogDate, err := ParseDate(logDate)
 		if err != nil {
@@ -43,7 +43,7 @@ func GetBakerySecurityLogs(c *gin.Context) {
 		f.Year, f.Month, f.Day = parsedLogDate.Year, parsedLogDate.Month, parsedLogDate.Day
 	}
 
-	logTime := strings.TrimSpace(request.Get("time"))
+	logTime := strings.TrimSpace(req.Get("time"))
 	if logTime != "" {
 		parsedLogTime, err := ParseTime(logTime)
 		if err != nil {
@@ -55,7 +55,7 @@ func GetBakerySecurityLogs(c *gin.Context) {
 		f.Hour, f.Minute = parsedLogTime.Hour, parsedLogTime.Minute
 	}
 
-	logTime2 := strings.TrimSpace(request.Get("time-2"))
+	logTime2 := strings.TrimSpace(req.Get("time-2"))
 	if logTime2 != "" {
 		parsedLogTime2, err := ParseTime(logTime2)
 		if err != nil {

@@ -21,18 +21,18 @@ type PhoneCall struct {
 }
 
 func GetPhoneCalls(c *gin.Context) {
-	request := c.Request.URL.Query()
+	req := c.Request.URL.Query()
 
 	f := model.PhoneCallsFilter{
 		Year:               -1,
 		Month:              -1,
 		Day:                -1,
-		DurationInequality: strings.TrimSpace(request.Get("duration-inequality")),
+		DurationInequality: strings.TrimSpace(req.Get("duration-inequality")),
 		Duration:           -1,
 		Callers:            nil,
 	}
 
-	callDate := strings.TrimSpace(request.Get("date"))
+	callDate := strings.TrimSpace(req.Get("date"))
 	if callDate != "" {
 		parsedCallDate, err := ParseDate(callDate)
 		if err != nil {
@@ -44,7 +44,7 @@ func GetPhoneCalls(c *gin.Context) {
 		f.Year, f.Month, f.Day = parsedCallDate.Year, parsedCallDate.Month, parsedCallDate.Day
 	}
 
-	duration := strings.TrimSpace(request.Get("duration"))
+	duration := strings.TrimSpace(req.Get("duration"))
 	if duration != "" {
 		d, err := strconv.Atoi(duration)
 		if err != nil {
@@ -55,7 +55,7 @@ func GetPhoneCalls(c *gin.Context) {
 		f.Duration = d
 	}
 
-	callers := request["caller"]
+	callers := req["caller"]
 	for i, caller := range callers {
 		callers[i] = strings.TrimSpace(caller)
 	}

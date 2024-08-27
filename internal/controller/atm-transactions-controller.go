@@ -19,17 +19,17 @@ type AtmTransaction struct {
 }
 
 func GetAtmTransactions(c *gin.Context) {
-	request := c.Request.URL.Query()
+	req := c.Request.URL.Query()
 
 	f := model.AtmTransactionsFilter{
 		Year:            -1,
 		Month:           -1,
 		Day:             -1,
-		AtmLocation:     strings.TrimSpace(request.Get("atm-location")),
-		TransactionType: strings.TrimSpace(request.Get("transaction-type")),
+		AtmLocation:     strings.TrimSpace(req.Get("atm-location")),
+		TransactionType: strings.TrimSpace(req.Get("transaction-type")),
 	}
 
-	transactionDate := strings.TrimSpace(request.Get("date"))
+	transactionDate := strings.TrimSpace(req.Get("date"))
 	if transactionDate != "" {
 		parsedTransactionDate, err := ParseDate(transactionDate)
 		if err != nil {
