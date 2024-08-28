@@ -22,8 +22,8 @@ type PhoneCallsFilter struct {
 	Year               int
 	Month              int
 	Day                int
-	DurationInequality string
 	Duration           int
+	DurationInequality string
 	Callers            []string
 }
 
@@ -47,6 +47,8 @@ func PhoneCalls(f PhoneCallsFilter) ([]PhoneCall, error) {
 			filter = "duration>?"
 		case "<":
 			filter = "duration<?"
+		case "":
+			filter = "duration=?"
 		default:
 			return nil, fmt.Errorf("-> (1) model.PhoneCalls %+v: %w", f, errors.New("invalid 'durationInequality' filter. valid values are '<' or '>'."))
 		}

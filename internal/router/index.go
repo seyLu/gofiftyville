@@ -36,7 +36,7 @@ func addRoutes(s *gin.RouterGroup) {
 	BakerySecurityLogsRouter(s)
 	AtmTransactionsRouter(s)
 	People(s)
-	PhoneCallsRotue(s)
+	PhoneCallsRouter(s)
 	FlightsRouter(s)
 	AirportsRouter(s)
 	FinalAnswerRouter(s)
