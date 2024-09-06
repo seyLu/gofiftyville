@@ -5,6 +5,12 @@ import (
 	"time"
 )
 
+var AnswerMap map[string]string = map[string]string{
+	"thief":      "Bruce",
+	"city":       "New York City",
+	"accomplice": "Robin",
+}
+
 type Date struct {
 	Year  int
 	Month int
