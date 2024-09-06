@@ -4,9 +4,9 @@
     <p>Fiftyville API written in Go.</p>
     <p>
         <a href="https://seylu.github.io/gofiftyville/docs"><img src="https://img.shields.io/badge/gofityville-docs-68d6e1" alt="Docs"></a>
-        <a href="https://go.dev/doc/effective_go"><img src="https://img.shields.io/badge/code%20style-effective_go-007d9c.svg" alt="Effective Go badge"></a>
         <a href="https://goreportcard.com/report/github.com/seyLu/gofiftyville"><img src="https://goreportcard.com/badge/github.com/seyLu/gofiftyville" alt="Go Report Card"></a>
         <a href="https://github.com/seyLu/gofiftyville/actions/workflows/test.yml"><img src="https://github.com/seyLu/gofiftyville/actions/workflows/test.yml/badge.svg" alt="Test badge"></a>
+        <a href="https://codecov.io/github/seyLu/gofiftyville"><img src="https://codecov.io/github/seyLu/gofiftyville/graph/badge.svg?token=ZBUH7E9IYH"/></a>
         <a href="https://github.com/seyLu/gofiftyville/blob/main/LICENSE"><img src="https://img.shields.io/github/license/seyLu/gofiftyville.svg" alt="MIT License"></a>
     </p>
     <p>
