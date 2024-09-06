@@ -32,5 +32,10 @@ jobs:
         with:
           go-version: ${{ matrix.go-version }}
 
-      - name: Go Test
-        run: go test -failfast ./...
+      - name: Run Tests
+        run: go test -failfast ./... -coverprofile=coverage.txt
+
+      - name: Upload results to Codecov
+        uses: codecov/codecov-action@8bacbcdafc25d23d7ccbf06e9aaf78c95a290f21 #v4.5.0
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
